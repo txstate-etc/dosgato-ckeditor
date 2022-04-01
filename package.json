@@ -1,6 +1,6 @@
 {
   "name": "@txstate-mws/dosgato-ckeditor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Custom CKEditor build for dosgato-dialog.",
   "keywords": [
     "dosgato",

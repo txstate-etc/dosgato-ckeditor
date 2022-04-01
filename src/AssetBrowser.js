@@ -58,10 +58,11 @@ export default class AssetBrowser extends Plugin {
       config.browseLink(linkFormView.urlInputView.value, linkUrl => {
         editor.model.change(writer => {
           writer.setSelection(selection)
-          if (linkUI._getSelectedLinkElement()) linkUI._addActionsView()
-          linkUI._addFormView()
-          linkFormView.urlInputView.fieldView.value = linkUrl
         })
+        linkUI._showUI(true)
+        linkUI._addFormView()
+        linkFormView.urlInputView.fieldView.value = ''
+        linkFormView.urlInputView.fieldView.value = linkUrl
       })
     })
     linkFormView.once('render', () => {
