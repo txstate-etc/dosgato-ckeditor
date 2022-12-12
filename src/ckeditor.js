@@ -3,6 +3,7 @@
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js'
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat.js'
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js'
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js'
@@ -37,6 +38,7 @@ class Editor extends ClassicEditor {}
 
 // Plugins to include in the build.
 Editor.builtinPlugins = [
+  Alignment,
   Autoformat,
   BlockQuote,
   Bold,
@@ -78,18 +80,23 @@ Editor.defaultConfig = {
       'specialCharacters',
       '|',
       'link',
+      '|',
+      'insertTable',
+      '|',
+      'assetBrowserImage',
+      '|',
       'undo',
       'redo',
-      '|',
-      'sourceEditing',
       '-',
+      'sourceEditing',
+      '|',
+      'alignment',
       'numberedList',
       'bulletedList',
       'indent',
       'outdent',
       '|',
       'heading',
-      'assetBrowserImage',
       '|',
       'fontColor'
     ],
