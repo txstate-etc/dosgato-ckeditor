@@ -8,6 +8,8 @@ import {
 import Collection from '@ckeditor/ckeditor5-utils/src/collection'
 import Model from '@ckeditor/ckeditor5-ui/src/model'
 
+import { getSelectionAffectedTable } from '../utils/helpers.js'
+
 class HeaderColorUI extends Plugin {
   init () {
     const editor = this.editor
@@ -69,6 +71,7 @@ class HeaderColorUI extends Plugin {
       this.listenTo(dropdownView, 'execute', (evt, data) => {
         const selection = getSelectionAffectedTable(editor.model.document.selection)
         editor.model.change(writer => writer.setAttribute('class', evt.source.commandParam, selection))
+        dropdownView.buttonView.label = evt.source.label
       })
 
       return dropdownView
@@ -94,23 +97,6 @@ function getDropdownItemsDefinitions (headerColors) {
   }
 
   return itemDefinitions
-}
-
-/**
- * Depending on the position of the selection we either return the table under cursor or look for the table higher in the hierarchy.
- *
- * @param {module:engine/model/position~Position} position
- * @returns {module:engine/model/element~Element}
- */
-function getSelectionAffectedTable (selection) {
-  const selectedElement = selection.getSelectedElement()
-
-  // Is the command triggered from the `tableToolbar`?
-  if (selectedElement && selectedElement.is('element', 'table')) {
-    return selectedElement
-  }
-
-  return selection.getFirstPosition().findAncestor('table')
 }
 
 export default class HeaderColor extends Plugin {
