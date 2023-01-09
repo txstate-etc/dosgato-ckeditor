@@ -29,7 +29,9 @@ import { SourceEditing } from '@ckeditor/ckeditor5-source-editing'
 import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters'
 import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials'
 import Table from '@ckeditor/ckeditor5-table/src/table.js'
+import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties'
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js'
+import TableHeaderColor from './Table/headerColor-plugin.js'
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js'
 import Undo from '@ckeditor/ckeditor5-undo/src/undo'
 import AssetBrowser from './AssetBrowser.js'
@@ -62,7 +64,9 @@ Editor.builtinPlugins = [
   SpecialCharacters,
   SpecialCharactersEssentials,
   Table,
+  TableCellProperties,
   TableToolbar,
+  TableHeaderColor,
   TextTransformation,
   Undo,
   AssetBrowser
@@ -127,7 +131,7 @@ Editor.defaultConfig = {
     ]
   },
   table: {
-    contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+    contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'headerColor']
   },
   fontColor: {
     colors: []
