@@ -31,9 +31,11 @@ import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/
 import Table from '@ckeditor/ckeditor5-table/src/table.js'
 import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties'
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js'
-import TableHeaderColor from './Table/headerColor-plugin.js'
+import CustomTableToolbar from './Table/CustomTableToolbar.js'
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js'
 import Undo from '@ckeditor/ckeditor5-undo/src/undo'
+import TableHeaderColor from './Table/HeaderColor-plugin.js'
+import TableWidth from './Table/TableWidth-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
 
 class Editor extends ClassicEditor {}
@@ -44,6 +46,7 @@ Editor.builtinPlugins = [
   Autoformat,
   BlockQuote,
   Bold,
+  CustomTableToolbar,
   Essentials,
   Font,
   Heading,
@@ -67,6 +70,7 @@ Editor.builtinPlugins = [
   TableCellProperties,
   TableToolbar,
   TableHeaderColor,
+  TableWidth,
   TextTransformation,
   Undo,
   AssetBrowser
@@ -131,7 +135,7 @@ Editor.defaultConfig = {
     ]
   },
   table: {
-    contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'headerColor']
+    contentToolbar: ['customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties', 'tableWidth', 'headerColor']
   },
   fontColor: {
     colors: []
