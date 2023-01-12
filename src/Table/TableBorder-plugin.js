@@ -43,7 +43,11 @@ class TableBorderUI extends Plugin {
         editor.model.change(writer => {
           if (selection.getAttribute('border')) {
             writer.removeAttribute('border', selection)
-          } else writer.setAttribute('border', 'border', selection)
+            buttonView.isOn = false
+          } else {
+            writer.setAttribute('border', 'border', selection)
+            buttonView.isOn = true
+          }
         })
 			} )
 
