@@ -38,6 +38,8 @@ import TableHeaderColor from './Table/HeaderColor-plugin.js'
 import TableWidth from './Table/TableWidth-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
 
+import './ckeditor.css'
+
 class Editor extends ClassicEditor {}
 
 // Plugins to include in the build.
@@ -116,11 +118,11 @@ Editor.defaultConfig = {
       { title: 'Title', view: 'h2', model: 'heading2', class: 'ck-heading_heading2' },
       { title: 'Subtitle', view: 'h3', model: 'heading3', class: 'ck-heading_heading3' },
       { title: 'Subsubtitle', view: 'h4', model: 'heading4', class: 'ck-heading_heading4' },
-      { title: 'Preformatted Text', view: 'pre', model: 'preformattedText' },
-      { title: 'Superscript', view: 'sup', model: 'superscript' },
-      { title: 'Subscript', view: 'sub', model: 'subscript' },
-      { title: 'Strike Out', view: 's', model: 'strikeout' },
-      { title: 'Computer Code', view: 'code', model: 'code' }
+      { title: 'Preformatted Text', view: 'pre', model: 'preformattedText', class: 'ck-heading-preformattedText' },
+      { title: 'Superscript', view: 'sup', model: 'superscript', class: 'ck-heading-superscript' },
+      { title: 'Subscript', view: 'sub', model: 'subscript', class: 'ck-heading-subscript' },
+      { title: 'Strike Out', view: 's', model: 'strikeout', class: 'ck-heading-strikeout' },
+      { title: 'Computer Code', view: 'code', model: 'code', class: 'ck-heading-code' }
     ]
   },
   language: 'en',
