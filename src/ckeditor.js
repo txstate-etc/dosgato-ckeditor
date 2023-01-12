@@ -36,6 +36,7 @@ import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformatio
 import Undo from '@ckeditor/ckeditor5-undo/src/undo'
 import TableHeaderColor from './Table/HeaderColor-plugin.js'
 import TableWidth from './Table/TableWidth-plugin.js'
+import TableBorder from './Table/TableBorder-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
 
 import './ckeditor.css'
@@ -69,6 +70,7 @@ Editor.builtinPlugins = [
   SpecialCharacters,
   SpecialCharactersEssentials,
   Table,
+  TableBorder,
   TableCellProperties,
   TableToolbar,
   TableHeaderColor,
@@ -137,7 +139,7 @@ Editor.defaultConfig = {
     ]
   },
   table: {
-    contentToolbar: ['customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties', 'tableWidth', 'headerColor']
+    contentToolbar: ['customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties', 'headerColor', 'tableWidth', 'tableBorder']
   },
   fontColor: {
     colors: []
