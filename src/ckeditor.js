@@ -34,9 +34,11 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js'
 import CustomTableToolbar from './Table/CustomTableToolbar.js'
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js'
 import Undo from '@ckeditor/ckeditor5-undo/src/undo'
+import TableProperties from './Table/TableProperties-plugin.js'
 import TableHeaderColor from './Table/HeaderColor-plugin.js'
 import TableWidth from './Table/TableWidth-plugin.js'
 import TableBorder from './Table/TableBorder-plugin.js'
+import TableAlternatingBG from './Table/TableAlternatingBG-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
 
 import './ckeditor.css'
@@ -70,10 +72,12 @@ Editor.builtinPlugins = [
   SpecialCharacters,
   SpecialCharactersEssentials,
   Table,
+  TableAlternatingBG,
   TableBorder,
   TableCellProperties,
-  TableToolbar,
   TableHeaderColor,
+  TableProperties,
+  TableToolbar,
   TableWidth,
   TextTransformation,
   Undo,
@@ -139,7 +143,9 @@ Editor.defaultConfig = {
     ]
   },
   table: {
-    contentToolbar: ['customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties', 'headerColor', 'tableWidth', 'tableBorder']
+    contentToolbar: ['customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties',
+    // 'headerColor', 'tableWidth', 'tableBorder', 'tableAlternatingBG'
+    ]
   },
   fontColor: {
     colors: []
