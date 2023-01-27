@@ -25,9 +25,6 @@ export default class TablePropertiesView extends View {
 
     this.options = options
 
-    // Defer creating to make sure other fields are present and the Save button can
-		// bind its #isEnabled to their error messages so there's no way to save unless all
-		// fields are valid.
     const { saveButtonView, cancelButtonView} = this._createActionButtons()
 
     this.saveButtonView = saveButtonView
@@ -235,8 +232,6 @@ export default class TablePropertiesView extends View {
   _createToggleButtons () {
     const t = this.t
     const locale = this.locale
-
-    // const borderCommand = this.editor.commands.get('tableBorder')
 
     const borderButtonView = new ButtonView(locale)
     const altBGButtonView = new ButtonView(locale)

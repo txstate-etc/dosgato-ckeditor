@@ -96,8 +96,6 @@ class TablePropertiesUI extends Plugin {
     const editor = this.editor
     const view = new TablePropertiesView(editor.locale, this.tableProperties)
 
-    // const t = editor.t
-
     view.render()
 
     this.listenTo(view, 'submit', () => { this._hideView() })
@@ -199,7 +197,6 @@ class TablePropertiesUI extends Plugin {
 			.map( ( [ property, commandName ] ) => {
 				const defaultValue = this._defaultTableProperties[ property ] || '';
         const command = commands.get( commandName )
-        // console.log('commandName: ', commandName, 'property: ', property, 'defaultValue: ', defaultValue, 'command: ', command)
 
 				return [ property, command.value || defaultValue ];
 			} )
