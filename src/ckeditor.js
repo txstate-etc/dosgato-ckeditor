@@ -34,11 +34,7 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js'
 import CustomTableToolbar from './Table/CustomTableToolbar.js'
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js'
 import Undo from '@ckeditor/ckeditor5-undo/src/undo'
-import TableProperties from './Table/TableProperties-plugin.js'
-import TableHeaderColor from './Table/HeaderColor-plugin.js'
-import TableWidth from './Table/TableWidth-plugin.js'
-import TableBorder from './Table/TableBorder-plugin.js'
-import TableAlternatingBG from './Table/TableAlternatingBG-plugin.js'
+import TableProperties from './Table/TablePropertiesUI-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
 
 import './ckeditor.css'
@@ -72,13 +68,9 @@ Editor.builtinPlugins = [
   SpecialCharacters,
   SpecialCharactersEssentials,
   Table,
-  TableAlternatingBG,
-  TableBorder,
   TableCellProperties,
-  TableHeaderColor,
   TableProperties,
   TableToolbar,
-  TableWidth,
   TextTransformation,
   Undo,
   AssetBrowser
@@ -143,9 +135,29 @@ Editor.defaultConfig = {
     ]
   },
   table: {
-    contentToolbar: ['customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties',
-    // 'headerColor', 'tableWidth', 'tableBorder', 'tableAlternatingBG'
-    ]
+    contentToolbar: ['customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'],
+    tableProperties: {
+      tableHeaderColors: [
+        { label: 'None', value: 'header-color-none' },
+        { label: 'Default (Gold)', value: 'header-color-gold' },
+        { label: 'Maroon', value: 'header-color-maroon' },
+        { label: 'Charcoal', value: 'header-color-charcoal' },
+        { label: 'Deep Blue', value: 'header-color-blue' },
+        { label: 'River', value: 'header-color-river' },
+        { label: 'Sandstone', value: 'header-color-sandstone' },
+        { label: 'Old Gold', value: 'header-color-oldgold' }
+      ],
+      tableWidth: [
+        { label: '100%', value: 'full-width' },
+        { label: 'Auto', value: 'auto-width' }
+      ],
+      tableHeaders: [
+        { label: 'None', value: 'none' },
+        { label: 'First Row', value: 'row' },
+        { label: 'First Column', value: 'column' },
+        { label: 'Both', value: 'both' }
+      ],
+    }
   },
   fontColor: {
     colors: []
