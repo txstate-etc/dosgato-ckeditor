@@ -1,7 +1,14 @@
 import { icons } from '@ckeditor/ckeditor5-core'
-import { View, ButtonView, ViewCollection, FocusCycler, FormHeaderView, submitHandler } from '@ckeditor/ckeditor5-ui'
+import { View, ButtonView, ViewCollection, FocusCycler, FormHeaderView, submitHandler, addListToDropdown, Model, LabeledFieldView, createLabeledDropdown } from '@ckeditor/ckeditor5-ui'
 import FormRowView from '@ckeditor/ckeditor5-table/src/ui/formrowview'
-import { FocusTracker, KeystrokeHandler } from '@ckeditor/ckeditor5-utils'
+import { FocusTracker, KeystrokeHandler, Collection } from '@ckeditor/ckeditor5-utils'
+
+function getLabels (t, c) {
+  return c.reduce((acc, curr) => {
+    acc[curr.value] = t(curr.label)
+    return acc
+  }, {})
+}
 
 export default class TablePropertiesView extends View {
 
@@ -9,14 +16,11 @@ export default class TablePropertiesView extends View {
     super(locale)
 
     this.set({
-      headerColor: '',
+      tableHeaderColors: '',
       tableWidth: '',
-      headers: {
-        row: false,
-        column: false
-      },
-      border: true,
-      altBGColor: false
+      tableHeaders: '',
+      tableBorder: false,
+      tableAltBGColor: false
     })
 
     this.options = options
@@ -27,9 +31,24 @@ export default class TablePropertiesView extends View {
     const { saveButtonView, cancelButtonView} = this._createActionButtons()
 
     this.saveButtonView = saveButtonView
-
+    
     this.cancelButtonView = cancelButtonView
 
+    const { headersDropdownView, tableHeaderColorsDropdownView } = this._createHeaderButtons()
+
+    this.headersDropdownView = headersDropdownView
+
+    this.tableHeaderColorDropdownView = tableHeaderColorsDropdownView
+
+    const { borderButtonView, altBGButtonView } = this._createToggleButtons()
+
+    this.borderButtonView = borderButtonView
+
+    this.altBGButtonView = altBGButtonView
+
+    const tableWidthsDropdown = this._createDropdown('tableWidth', 'Table Width', this.options.tableWidth)
+
+    this.tableWidthsDropdown = tableWidthsDropdown
     
     this.focusTracker = new FocusTracker()
     
@@ -55,6 +74,29 @@ export default class TablePropertiesView extends View {
       label: this.t('Table Properties')
     }))
 
+    this.children.add(new FormRowView(locale, {
+      children: [
+        this.headersDropdownView,
+        this.tableHeaderColorDropdownView
+      ],
+      class: 'ck-table-form__border-row'
+    }))
+
+    this.children.add(new FormRowView(locale, {
+      children: [
+        this.tableWidthsDropdown,
+      ],
+      class: 'ck-table-form__border-row'
+    }))
+
+    this.children.add(new FormRowView(locale, {
+      children: [
+        this.borderButtonView,
+        this.altBGButtonView
+      ],
+      class: 'ck-table-form__border-row'
+    }))
+
     // Action row.
 		this.children.add( new FormRowView(locale, {
 			children: [
@@ -77,6 +119,8 @@ export default class TablePropertiesView extends View {
       },
       children: this.children
     })
+
+    this._validate()
   }
 
   render () {
@@ -85,6 +129,15 @@ export default class TablePropertiesView extends View {
     // Enable the "submit" event for this view. It can be triggered by the #saveButtonView
 		// which is of the "submit" DOM "type".
     submitHandler({ view: this })
+
+    // const views = [this.headersDropdownView, this.tableHeaderColorDropdownView, this.borderButtonView, this.altBGButtonView, this.saveButtonView, this.cancelButtonView]
+    // views.forEach(view => {
+		// 	// Register the view as focusable.
+		// 	this._focusables.add( view );
+
+		// 	// Register the view in the focus tracker.
+		// 	this.focusTracker.add( view.element );
+		// })
 
     // Mainly for closing using "Esc" and navigation using "Tab"
     this.keystrokes.listenTo(this.element)
@@ -99,6 +152,56 @@ export default class TablePropertiesView extends View {
 
   focus () {
     this._focusCycler.focusFirst()
+  }
+
+  _validate () {
+    this.on('change:tableHeaders', (evt, name, newValue, oldValue) => {
+      if (newValue.includes('none')) {
+        this.tableHeaderColors = 'none'
+      }
+    })
+  }
+
+  _createDropdown (key, label, items) {
+    const locale = this.locale
+    const t = this.t
+    
+    const headerView = new LabeledFieldView(locale, createLabeledDropdown)
+
+    const labels = getLabels(t, items)
+
+    headerView.set({
+			label: t(label),
+			// class: 'ck-table-form__border-style'
+		})
+
+    headerView.fieldView.buttonView.set({
+      label: t(label),
+      isOn: false,
+      withText: true,
+    })
+
+    headerView.fieldView.buttonView.bind('label').to( this, key, value => {
+			return labels[value] || Object.values(labels)[0]
+		})
+
+		headerView.fieldView.on('execute', evt => { this[key] = evt.source.commandParam })
+    
+		headerView.bind('isEmpty').to(this, key, value => !value)
+
+    addListToDropdown(
+      headerView.fieldView,
+      getDropdownItemsDefinitions(t, items)
+    )
+
+    return headerView
+  }
+
+  _createHeaderButtons () {
+    return {
+      headersDropdownView: this._createDropdown('tableHeaders', 'Headers', this.options.tableHeaders),
+      tableHeaderColorsDropdownView: this._createDropdown('tableHeaderColors', 'Header Colors', this.options.tableHeaderColors)
+    }
   }
 
   _createActionButtons () {
@@ -129,4 +232,70 @@ export default class TablePropertiesView extends View {
     }
   }
 
+  _createToggleButtons () {
+    const t = this.t
+    const locale = this.locale
+
+    // const borderCommand = this.editor.commands.get('tableBorder')
+
+    const borderButtonView = new ButtonView(locale)
+    const altBGButtonView = new ButtonView(locale)
+
+    borderButtonView.set({
+      label: t('Border'),
+      tooltip: true,
+      withText: true,
+      isToggleable: true
+    })
+
+    altBGButtonView.set({
+      label: t('Alternating Background'),
+      tooltip: true,
+      withText: true,
+      isToggleable: true
+    })
+
+    borderButtonView.bind('isOn').to(this, 'tableBorder', value => {
+			return !!Number(value)
+    })
+
+    altBGButtonView.bind('isOn').to(this, 'tableAltBGColor', value => {
+      return value
+    })
+
+    borderButtonView.on('execute', () => {
+      const value = borderButtonView.isOn ? '1' : '0'
+      this.tableBorder = value === '1' ? '0' : '1'
+    })
+
+    altBGButtonView.on('execute', () => {
+      this.tableAltBGColor = altBGButtonView.isOn ? '' : 'alternating-row-color'
+    })
+
+    return {
+      borderButtonView,
+      altBGButtonView
+    }
+  }
+}
+
+function getDropdownItemsDefinitions (t, items) {
+  const itemDefinitions = new Collection()
+  const labels = getLabels(t, items)
+
+  for (const item in labels) {
+    const definition = {
+      type: 'button',
+      model: new Model({
+        commandParam: item,
+        label: labels[item],
+        withText: true
+      })
+    }
+
+    // Add the item definition to the collection.
+    itemDefinitions.add(definition)
+  }
+
+  return itemDefinitions
 }
