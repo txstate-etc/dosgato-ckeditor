@@ -152,9 +152,15 @@ export default class TablePropertiesView extends View {
   }
 
   _validate () {
-    this.on('change:tableHeaders', (evt, name, newValue, oldValue) => {
+    this.on('change:tableHeaders', (evt, name, newValue) => {
       if (newValue.includes('none')) {
         this.tableHeaderColors = 'none'
+      } else if (this.tableHeaderColors.includes('none')) {
+        const colors = this.options.tableHeaderColors
+        const defaultColor = colors.find(({ label, value }) => value.toLowerCase().includes('default') || label.toLowerCase().includes('default'))
+        if (defaultColor) {
+          this.tableHeaderColors = defaultColor.value
+        } else if (this.colors.length) this.tableHeaderColors = colors[0].value
       }
     })
   }

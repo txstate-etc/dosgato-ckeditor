@@ -180,7 +180,6 @@ class TablePropertiesUI extends Plugin {
 			if ( !oldValue && defaultValue === newValue ) {
         return;
 			}
-      console.log(commandName, newValue, oldValue)
 			this.editor.execute( commandName, {
 				value: newValue,
         oldValue,
@@ -191,7 +190,6 @@ class TablePropertiesUI extends Plugin {
 
   _fillViewFormFromCommandValues() {
 		const commands = this.editor.commands;
-    console.log(this._defaultTableProperties)
 
 		Object.entries( propertyToCommandMap )
 			.map( ( [ property, commandName ] ) => {
