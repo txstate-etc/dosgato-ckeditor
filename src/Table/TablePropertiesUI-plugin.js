@@ -39,10 +39,10 @@ class TablePropertiesUI extends Plugin {
     }
 
     editor.commands.add('tableHeaders', new TableHeaderCommand(editor))
-    editor.commands.add('tableHeaderColors', new TableClassCommand(editor))
-    editor.commands.add('tableWidth', new TableClassCommand(editor))
+    editor.commands.add('tableHeaderColors', new TableClassCommand(editor, this.tableProperties['tableHeaderColors']))
+    editor.commands.add('tableWidth', new TableClassCommand(editor, this.tableProperties['tableWidth']))
     editor.commands.add('tableBorder', new TableBorderCommand(editor))
-    editor.commands.add('tableAltBGColor', new TableClassCommand(editor))
+    editor.commands.add('tableAltBGColor', new TableClassCommand(editor, 'alternating-row-color'))
 
     editor.model.schema.extend('table', {
       allowAttributes: 'class'
@@ -117,11 +117,11 @@ class TablePropertiesUI extends Plugin {
       callback: () => this._hideView()
     })
 
-    view.on('change:tableHeaders', this._getPropertyChangeCallback('tableHeaders'))
-    view.on('change:tableHeaderColors', this._getPropertyChangeCallback('tableHeaderColors'))
-    view.on('change:tableWidth', this._getPropertyChangeCallback('tableWidth'))
-    view.on('change:tableBorder', this._getPropertyChangeCallback('tableBorder'))
-    view.on('change:tableAltBGColor', this._getPropertyChangeCallback('tableAltBGColor'))
+    view.on('change:tableHeaders', this._getPropertyChangeCallback('tableHeaders', this._defaultTableProperties))
+    view.on('change:tableHeaderColors', this._getPropertyChangeCallback('tableHeaderColors', this._defaultTableProperties))
+    view.on('change:tableWidth', this._getPropertyChangeCallback('tableWidth', this._defaultTableProperties))
+    view.on('change:tableBorder', this._getPropertyChangeCallback('tableBorder', this._defaultTableProperties))
+    view.on('change:tableAltBGColor', this._getPropertyChangeCallback('tableAltBGColor', this._defaultTableProperties))
 
     return view
   }
@@ -173,13 +173,10 @@ class TablePropertiesUI extends Plugin {
     if (this.view) this.view.destroy()
   }
 
-  _getPropertyChangeCallback( commandName, defaultValue ) {
+  _getPropertyChangeCallback( commandName, values ) {
     return ( evt, propertyName, newValue, oldValue ) => {
-      // If the "oldValue" is missing and "newValue" is set to the default value, do not execute the command.
-			// It is an initial call (when opening the table properties view).
-			if ( !oldValue && defaultValue === newValue ) {
-        return;
-			}
+      const defaultValue = values[commandName]
+			if ( !oldValue && defaultValue === newValue ) return
 			this.editor.execute( commandName, {
 				value: newValue,
         oldValue,
@@ -191,16 +188,16 @@ class TablePropertiesUI extends Plugin {
   _fillViewFormFromCommandValues() {
 		const commands = this.editor.commands;
 
-		Object.entries( propertyToCommandMap )
-			.map( ( [ property, commandName ] ) => {
-				const defaultValue = this._defaultTableProperties[ property ] || '';
-        const command = commands.get( commandName )
+		Object.values(propertyToCommandMap)
+			.map( (property) => {
+				const defaultValue = this._defaultTableProperties[ property ] || ''
+        const command = commands.get(property)
 
-				return [ property, command.value || defaultValue ];
+				return [property, command.value || defaultValue]
 			} )
-			.forEach( ( [ property, value ] ) => {
-				this.view.set( property, value );
-			} );
+			.forEach(([ property, value]) => {
+				this.view.set( property, value )
+			})
 	}
 
 }

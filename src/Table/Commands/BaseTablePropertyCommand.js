@@ -8,6 +8,13 @@ export default class TablePropertyCommand extends Command {
     this.attributeName = attributeName
   }
 
+  refresh () {
+    const model = this.editor.model
+    const table = getSelectionAffectedTable(model.document.selection)
+    this.isEnabled = true
+    this.value = this._getAttribute(table)
+  }
+
   execute( options = {} ) {
     const { value, batch, oldValue } = options
     const model = this.editor.model
@@ -22,5 +29,10 @@ export default class TablePropertyCommand extends Command {
     model.enqueueChange( batch, writer => {
         writer.setAttribute(this.attributeName, [...attributes, value].join(' '), table)
     })
+  }
+
+  _getAttribute (table) {
+    if (!table) return
+    return table.getAttribute(this.attributeName)
   }
 }
