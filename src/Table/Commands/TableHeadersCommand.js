@@ -1,13 +1,30 @@
-// import { Command } from 'ckeditor5/src/core'
+import { Command } from 'ckeditor5/src/core'
 import { updateNumericAttribute } from '@ckeditor/ckeditor5-table/src/utils/common'
 import { getHorizontallyOverlappingCells, getVerticallyOverlappingCells, splitHorizontally, splitVertically } from '@ckeditor/ckeditor5-table/src/utils/structure'
 import { getSelectionAffectedTable } from '../../utils/helpers'
-import TablePropertyCommand from './BaseTablePropertyCommand'
 
- export default class TableHeaderCommand extends TablePropertyCommand {
+ export default class TableHeaderCommand extends Command {
   constructor(editor, defaultValue) {
     super(editor, 'class', defaultValue);
   }
+
+  refresh () {
+    const model = this.editor.model
+    const table = getSelectionAffectedTable(model.document.selection)
+
+    if (!table) return
+
+    const row = table.getAttribute('headingRows')
+    const column = table.getAttribute('headingColumns')
+
+    this.isEnabled = true
+
+    if (row && column) this.value = 'both'
+    else if (row) this.value = 'row'
+    else if (column) this.value = 'column'
+    else this.value = 'none'
+  }
+
    execute(options = {}) {
      if (options.value === this.value) {
        return
