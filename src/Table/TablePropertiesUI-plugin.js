@@ -42,7 +42,7 @@ class TablePropertiesUI extends Plugin {
     editor.commands.add('tableHeaderColors', new TableClassCommand(editor, this.tableProperties['tableHeaderColors']))
     editor.commands.add('tableWidth', new TableClassCommand(editor, this.tableProperties['tableWidth']))
     editor.commands.add('tableBorder', new TableBorderCommand(editor))
-    editor.commands.add('tableAltBGColor', new TableClassCommand(editor, 'alternating-row-color'))
+    editor.commands.add('tableAltBGColor', new TableClassCommand(editor, 'alternate-row-color'))
 
     editor.model.schema.extend('table', {
       allowAttributes: 'class'

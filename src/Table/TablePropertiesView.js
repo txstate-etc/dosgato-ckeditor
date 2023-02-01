@@ -255,7 +255,7 @@ export default class TablePropertiesView extends View {
     })
 
     altBGButtonView.on('execute', () => {
-      this.tableAltBGColor = altBGButtonView.isOn ? '' : 'alternating-row-color'
+      this.tableAltBGColor = altBGButtonView.isOn ? '' : 'alternate-row-color'
     })
 
     return {
