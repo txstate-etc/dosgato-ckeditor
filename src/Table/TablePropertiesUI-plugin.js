@@ -31,7 +31,7 @@ class TablePropertiesUI extends Plugin {
 
     this._undoStepBatch = null
 
-    this.tableProperties = editor.config.get('table.tableProperties')
+    this.tableProperties = editor.config.get('table.tableProperties') || {}
 
     this._defaultTableProperties = {
       ...getDefaultProperties(this.tableProperties),
