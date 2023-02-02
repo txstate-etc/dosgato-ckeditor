@@ -1,3 +1,92 @@
+export const defaultConfig = {
+  toolbar: {
+    items: [
+      'bold',
+      'italic',
+      'horizontalLine',
+      'blockQuote',
+      'removeFormat',
+      'specialCharacters',
+      '|',
+      'link',
+      '|',
+      'insertTable',
+      '|',
+      'assetBrowserImage',
+      '|',
+      'undo',
+      'redo',
+      '-',
+      'sourceEditing',
+      '|',
+      'alignment',
+      'numberedList',
+      'bulletedList',
+      'indent',
+      'outdent',
+      '|',
+      'heading',
+      '|',
+      'fontColor'
+    ],
+    shouldNotGroupWhenFull: true
+  },
+  heading: {
+    options: [
+      { title: 'Paragraph', model: 'paragraph', class: 'ck-heading_paragraph' },
+      { title: 'Title', view: 'h2', model: 'heading2', class: 'ck-heading_heading2' },
+      { title: 'Subtitle', view: 'h3', model: 'heading3', class: 'ck-heading_heading3' },
+      { title: 'Subsubtitle', view: 'h4', model: 'heading4', class: 'ck-heading_heading4' },
+      { title: 'Preformatted Text', view: 'pre', model: 'preformattedText', class: 'ck-heading-preformattedText' },
+      { title: 'Superscript', view: 'sup', model: 'superscript', class: 'ck-heading-superscript' },
+      { title: 'Subscript', view: 'sub', model: 'subscript', class: 'ck-heading-subscript' },
+      { title: 'Strike Out', view: 's', model: 'strikeout', class: 'ck-heading-strikeout' },
+      { title: 'Computer Code', view: 'code', model: 'code', class: 'ck-heading-code' }
+    ]
+  },
+  language: 'en',
+  image: {
+    toolbar: [
+      'imageStyle:inline',
+      'imageStyle:wrapText',
+      'imageStyle:breakText',
+      '|',
+      'toggleImageCaption',
+      'imageTextAlternative'
+    ]
+  },
+  table: {
+    contentToolbar: ['customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'],
+    tableProperties: {
+      tableHeaderColors: [
+        { label: 'None', value: 'header-color-none' },
+        { label: 'Default (Gold)', value: 'header-color-gold' },
+        { label: 'Maroon', value: 'header-color-maroon' },
+        { label: 'Charcoal', value: 'header-color-charcoal' },
+        { label: 'Deep Blue', value: 'header-color-blue' },
+        { label: 'River', value: 'header-color-river' },
+        { label: 'Sandstone', value: 'header-color-sandstone' },
+        { label: 'Old Gold', value: 'header-color-oldgold' }
+      ],
+      tableWidth: [
+        { label: '100%', value: 'full-width' },
+        { label: 'Auto', value: 'auto-width' }
+      ],
+      tableHeaders: [
+        { label: 'None', value: 'none' },
+        { label: 'First Row', value: 'row' },
+        { label: 'First Column', value: 'column' },
+        { label: 'Both', value: 'both' }
+      ],
+    }
+  },
+  htmlSupport: {
+    allow: htmlSupport
+  },
+  fontColor: {
+    colors: []
+  }
+}
 
 const allowedContent = 'a abbr address area article aside audio b base bdi bdo blockquote body br button canvas caption cite code col colgroup command datalist dd del details dfn div dl dt em embed fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 head header hgroup hr html i iframe img input ins kbd keygen label legend li link map mark menu meta meter nav noscript object ol optgroup option output p param pre progress q rp rt ruby s samp script section select small source span strong style sub summary sup table tbody td textarea tfoot th thead time title tr track u ul var video wbr acronym applet basefont big center dialog dir font isindex noframes strike tt'
 
@@ -9,5 +98,3 @@ export const htmlSupport = allowedContent.split(' ').map(name => ({
   classes: true,
   attributes: true
 }))
-
-console.log(htmlSupport)
