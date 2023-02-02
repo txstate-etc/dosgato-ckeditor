@@ -21,6 +21,8 @@ export default class TablePropertyCommand extends Command {
     const table = getSelectionAffectedTable(model.document.selection)
 
     const attributes = table.getAttribute(this.attributeName) ? table.getAttribute(this.attributeName).split(' ') : []
+
+    if (attributes.includes(value)) return
     
     const oldIndex = attributes.indexOf(oldValue)
     
