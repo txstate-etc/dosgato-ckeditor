@@ -16,7 +16,7 @@ import TablePropertyCommand from './BaseTablePropertyCommand'
       this.value = this._findValue(attr)
     }
 
-    _findValue (attr) {
+    _findValue (attr = '') {
       if (typeof this.values === 'string') {
         return attr.includes(this.values) ? this.values : ''
       } else {

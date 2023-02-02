@@ -9,6 +9,7 @@ import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js'
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js'
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js'
 import Font from '@ckeditor/ckeditor5-font/src/font'
+import GeneralHtmlSupport from '@ckeditor/ckeditor5-html-support/src/generalhtmlsupport'
 import Heading from '@ckeditor/ckeditor5-heading/src/heading.js'
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline'
 import {
@@ -38,6 +39,7 @@ import TableProperties from './Table/TablePropertiesUI-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
 
 import './ckeditor.css'
+import { htmlSupport } from './utils/defaultConfigs.js'
 
 class Editor extends ClassicEditor {}
 
@@ -50,6 +52,7 @@ Editor.builtinPlugins = [
   CustomTableToolbar,
   Essentials,
   Font,
+  GeneralHtmlSupport,
   Heading,
   HorizontalLine,
   Image,
@@ -158,6 +161,9 @@ Editor.defaultConfig = {
         { label: 'Both', value: 'both' }
       ],
     }
+  },
+  htmlSupport: {
+    allow: htmlSupport
   },
   fontColor: {
     colors: []
