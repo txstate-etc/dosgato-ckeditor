@@ -117,6 +117,7 @@ export default class TablePropertiesView extends View {
       children: this.children
     })
 
+    this._validate()
   }
 
   render () {
