@@ -37,9 +37,8 @@ import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformatio
 import Undo from '@ckeditor/ckeditor5-undo/src/undo'
 import TableProperties from './Table/TablePropertiesUI-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
-
-import './ckeditor.css'
 import { htmlSupport } from './utils/defaultConfigs.js'
+import './ckeditor.css'
 
 class Editor extends ClassicEditor {}
 
@@ -78,5 +77,28 @@ Editor.builtinPlugins = [
   Undo,
   AssetBrowser
 ]
+
+const defaultConfig = {
+  heading: {
+    options: [
+      { title: 'Paragraph', model: 'paragraph', class: 'ck-heading_paragraph' },
+      { title: 'Title', view: 'h2', model: 'heading2', class: 'ck-heading_heading2' },
+      { title: 'Subtitle', view: 'h3', model: 'heading3', class: 'ck-heading_heading3' },
+      { title: 'Subsubtitle', view: 'h4', model: 'heading4', class: 'ck-heading_heading4' },
+      { title: 'Preformatted Text', view: 'pre', model: 'preformattedText', class: 'ck-heading-preformattedText' },
+      { title: 'Superscript', view: 'sup', model: 'superscript', class: 'ck-heading-superscript' },
+      { title: 'Subscript', view: 'sub', model: 'subscript', class: 'ck-heading-subscript' },
+      { title: 'Strike Out', view: 's', model: 'strikeout', class: 'ck-heading-strikeout' },
+      { title: 'Computer Code', view: 'code', model: 'code', class: 'ck-heading-code' }
+    ]
+  },
+  htmlSupport: {
+    allow: htmlSupport
+  },
+  language: 'en'
+}
+
+
+Editor.defaultConfig = defaultConfig
 
 export default Editor

@@ -150,6 +150,22 @@ export default class TablePropertiesView extends View {
     this._focusCycler.focusFirst()
   }
 
+  _validate () {
+    this.on('change:tableHeaders', (evt, name, newValue) => {
+      const colors = this.options.tableHeaderColors
+      if (newValue.includes('none')) {
+        const none = colors.find(({ label, value }) => value.toLowerCase().includes('none') || label.toLowerCase().includes('none'))
+        if (none) this.tableHeaderColors = none.value
+        else this.tableHeaderColors = ''
+      } else if (this.tableHeaderColors.includes('none')) {
+        const defaultColor = colors.find(({ label, value }) => value.toLowerCase().includes('default') || label.toLowerCase().includes('default'))
+        if (defaultColor) {
+          this.tableHeaderColors = defaultColor.value
+        } else if (this.colors.length) this.tableHeaderColors = colors[0].value
+      }
+    })
+  }
+
   _createDropdown (key, label, items) {
     const locale = this.locale
     const t = this.t
