@@ -53,10 +53,14 @@ class TablePropertiesUI extends Plugin {
         name: 'table',
         key: 'class'
       },
-      view: color => ( {
-        key: 'class',
-        value: color
-      })
+      view: c => {
+        if (typeof c === 'string') {
+          return {
+            key: 'class',
+            value: c
+          }
+        }
+      }
     })
 
     editor.conversion.attributeToAttribute({

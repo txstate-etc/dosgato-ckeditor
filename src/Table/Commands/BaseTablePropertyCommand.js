@@ -20,7 +20,8 @@ export default class TablePropertyCommand extends Command {
     const model = this.editor.model
     const table = getSelectionAffectedTable(model.document.selection)
 
-    const attributes = table.getAttribute(this.attributeName) ? table.getAttribute(this.attributeName).split(' ') : []
+    const attribute = this._getAttribute(table)
+    const attributes = attribute ? attribute.split(' ') : []
 
     if (attributes.includes(value)) return
     

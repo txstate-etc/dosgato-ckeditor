@@ -159,7 +159,7 @@ export default class TablePropertiesView extends View {
         if (none) this.tableHeaderColors = none.value
         else this.tableHeaderColors = ''
       } else if (this.tableHeaderColors.includes('none')) {
-        const defaultColor = colors.find(({ label, value }) => value.toLowerCase().includes('default') || label.toLowerCase().includes('default'))
+        const defaultColor = colors.find(({ label, value, default: d }) => d || value.toLowerCase().includes('default') || label.toLowerCase().includes('default'))
         if (defaultColor) {
           this.tableHeaderColors = defaultColor.value
         } else if (this.colors.length) this.tableHeaderColors = colors[0].value
@@ -176,8 +176,7 @@ export default class TablePropertiesView extends View {
     const labels = getLabels(t, items)
 
     headerView.set({
-			label: t(label),
-			// class: 'ck-table-form__border-style'
+			label: t(label)
 		})
 
     headerView.fieldView.buttonView.set({
