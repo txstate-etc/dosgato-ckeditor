@@ -11,9 +11,10 @@ import TablePropertyCommand from './BaseTablePropertyCommand'
       const model = this.editor.model
       const table = getSelectionAffectedTable(model.document.selection)
       const attr = this._getAttribute(table) || ''
+      const value = this._findValue(attr)
 
       this.isEnabled = true
-      this.value = this._findValue(attr)
+      this.value = value
     }
 
     _findValue (attr = '') {

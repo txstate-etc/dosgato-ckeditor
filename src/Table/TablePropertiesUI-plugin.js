@@ -2,6 +2,7 @@ import Plugin from '@ckeditor/ckeditor5-core/src/plugin'
 import { ContextualBalloon, ButtonView, clickOutsideHandler } from '@ckeditor/ckeditor5-ui'
 import { getTableWidgetAncestor } from '@ckeditor/ckeditor5-table/src/utils/ui/widget'
 import { repositionContextualBalloon, getBalloonTablePositionData } from '@ckeditor/ckeditor5-table/src/utils/ui/contextualballoon'
+import { DataFilter } from '@ckeditor/ckeditor5-html-support'
 import TablePropertiesView from './TablePropertiesView'
 import TableHeaderCommand from './Commands/TableHeadersCommand'
 import TableClassCommand from './Commands/TableClassCommand'
@@ -18,12 +19,14 @@ const propertyToCommandMap = {
 
 class TablePropertiesUI extends Plugin {
   static get requires () {
-    return [ContextualBalloon]
+    return [ContextualBalloon, DataFilter]
   }
 
   init () {
     const editor = this.editor
     const t = editor.t
+
+		const dataFilter = editor.plugins.get(DataFilter)
 
     this._balloon = editor.plugins.get(ContextualBalloon)
 
@@ -48,19 +51,15 @@ class TablePropertiesUI extends Plugin {
       allowAttributes: 'class'
     })
   
-    editor.conversion.attributeToAttribute( {
+    editor.conversion.attributeToAttribute({
       model: {
         name: 'table',
         key: 'class'
       },
-      view: c => {
-        if (typeof c === 'string') {
-          return {
-            key: 'class',
-            value: c
-          }
-        }
-      }
+      view: c => ({
+          key: 'class',
+          value: c
+      })
     })
 
     editor.conversion.attributeToAttribute({
@@ -71,6 +70,15 @@ class TablePropertiesUI extends Plugin {
       view: border => ({
         key: 'border',
         value: border
+      })
+    })
+
+    editor.conversion.for( 'upcast' ).add(dispatcher => {
+      dispatcher.on('element:figure', ( evt, data, conversionApi ) => {
+        const viewTableElement = data.viewItem
+        const viewAttributes = dataFilter.processViewAttributes(viewTableElement, conversionApi)
+        if (viewAttributes.classes) conversionApi.writer.setAttribute('class', viewAttributes.classes.join(' ').trim(), data.modelRange)
+        if (viewAttributes.attributes) Object.entries(viewAttributes.attributes).forEach(([key, value]) => conversionApi.writer.setAttribute(key, String(value), data.modelRange))
       })
     })
 
@@ -179,6 +187,10 @@ class TablePropertiesUI extends Plugin {
 
   _getPropertyChangeCallback( commandName, values ) {
     return ( evt, propertyName, newValue, oldValue ) => {
+      const iftrue = ['tableHeaderColors',
+        'tableWidth',
+        'tableAltBGColor'].includes(commandName)
+      if (iftrue) console.log(newValue, oldValue)
       const defaultValue = values[commandName]
 			if ( !oldValue && defaultValue === newValue ) return
 			this.editor.execute( commandName, {

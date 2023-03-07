@@ -11,8 +11,10 @@ export default class TablePropertyCommand extends Command {
   refresh () {
     const model = this.editor.model
     const table = getSelectionAffectedTable(model.document.selection)
+    const value = this._getAttribute(table)
+
     this.isEnabled = true
-    this.value = this._getAttribute(table)
+    this.value = value
   }
 
   execute( options = {} ) {
