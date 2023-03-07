@@ -17,6 +17,19 @@ const propertyToCommandMap = {
   tableAltBGColor: 'tableAltBGColor'
 };
 
+function tableUpcast (dataFilter) {
+  return ( evt, data, conversionApi ) => {
+    const viewTableElement = data.viewItem
+    const viewAttributes = dataFilter.processViewAttributes(viewTableElement, conversionApi)
+
+    if (viewAttributes?.classes) conversionApi.writer.setAttribute('class', viewAttributes.classes.join(' ').trim(), data.modelRange)
+
+    if (viewAttributes?.attributes?.border) {
+      conversionApi.writer.setAttribute('border', viewAttributes.attributes.border, data.modelRange)
+    } else if (data.modelRange) conversionApi.writer.setAttribute('border', '0', data.modelRange)
+  }
+}
+
 class TablePropertiesUI extends Plugin {
   static get requires () {
     return [ContextualBalloon, DataFilter]
@@ -47,9 +60,9 @@ class TablePropertiesUI extends Plugin {
     editor.commands.add('tableBorder', new TableBorderCommand(editor))
     editor.commands.add('tableAltBGColor', new TableClassCommand(editor, 'alternate-row-color'))
 
-    editor.model.schema.extend('table', {
-      allowAttributes: 'class'
-    })
+    // editor.model.schema.extend('table', {
+    //   allowAttributes: 'class'
+    // })
   
     editor.conversion.attributeToAttribute({
       model: {
@@ -57,8 +70,8 @@ class TablePropertiesUI extends Plugin {
         key: 'class'
       },
       view: c => ({
-          key: 'class',
-          value: c
+        key: 'class',
+        value: c
       })
     })
 
@@ -74,12 +87,11 @@ class TablePropertiesUI extends Plugin {
     })
 
     editor.conversion.for( 'upcast' ).add(dispatcher => {
-      dispatcher.on('element:figure', ( evt, data, conversionApi ) => {
-        const viewTableElement = data.viewItem
-        const viewAttributes = dataFilter.processViewAttributes(viewTableElement, conversionApi)
-        if (viewAttributes.classes) conversionApi.writer.setAttribute('class', viewAttributes.classes.join(' ').trim(), data.modelRange)
-        if (viewAttributes.attributes) Object.entries(viewAttributes.attributes).forEach(([key, value]) => conversionApi.writer.setAttribute(key, String(value), data.modelRange))
-      })
+      dispatcher.on('element:figure', tableUpcast(dataFilter))
+    })
+    
+    editor.conversion.for( 'upcast' ).add(dispatcher => {
+      dispatcher.on('element:table', tableUpcast(dataFilter))
     })
 
     editor.ui.componentFactory.add('tableProperties', locale => {
@@ -187,12 +199,8 @@ class TablePropertiesUI extends Plugin {
 
   _getPropertyChangeCallback( commandName, values ) {
     return ( evt, propertyName, newValue, oldValue ) => {
-      const iftrue = ['tableHeaderColors',
-        'tableWidth',
-        'tableAltBGColor'].includes(commandName)
-      if (iftrue) console.log(newValue, oldValue)
-      const defaultValue = values[commandName]
-			if ( !oldValue && defaultValue === newValue ) return
+      // const defaultValue = values[commandName]
+			// if ( !oldValue && defaultValue === newValue ) return
 			this.editor.execute( commandName, {
 				value: newValue,
         oldValue,
