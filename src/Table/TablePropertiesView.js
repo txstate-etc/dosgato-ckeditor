@@ -245,20 +245,18 @@ export default class TablePropertiesView extends View {
 
     borderButtonView.set({
       label: t('Border'),
-      tooltip: true,
       withText: true,
       isToggleable: true
     })
 
     altBGButtonView.set({
       label: t('Alternating Background'),
-      tooltip: true,
       withText: true,
       isToggleable: true
     })
 
     borderButtonView.bind('isOn').to(this, 'tableBorder', value => {
-			return !!Number(value)
+			return !!value
     })
 
     altBGButtonView.bind('isOn').to(this, 'tableAltBGColor', value => {
@@ -266,8 +264,7 @@ export default class TablePropertiesView extends View {
     })
 
     borderButtonView.on('execute', () => {
-      const value = borderButtonView.isOn ? '1' : '0'
-      this.tableBorder = value === '1' ? '0' : '1'
+      this.tableBorder = borderButtonView.isOn ? '' : 'border'
     })
 
     altBGButtonView.on('execute', () => {
