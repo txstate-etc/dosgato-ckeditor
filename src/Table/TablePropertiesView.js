@@ -19,8 +19,8 @@ export default class TablePropertiesView extends View {
       tableHeaderColors: '',
       tableWidth: '',
       tableHeaders: '',
-      tableBorder: false,
-      tableAltBGColor: false
+      tableBorder: '',
+      tableAltBGColor: ''
     })
 
     this.options = options
@@ -127,14 +127,15 @@ export default class TablePropertiesView extends View {
 		// which is of the "submit" DOM "type".
     submitHandler({ view: this })
 
-    // const views = [this.headersDropdownView, this.tableHeaderColorDropdownView, this.borderButtonView, this.altBGButtonView, this.saveButtonView, this.cancelButtonView]
-    // views.forEach(view => {
-		// 	// Register the view as focusable.
-		// 	this._focusables.add( view );
+    const views = [this.headersDropdownView, this.tableHeaderColorDropdownView, this.tableWidthsDropdown, this.borderButtonView, this.altBGButtonView, this.saveButtonView, this.cancelButtonView]
 
-		// 	// Register the view in the focus tracker.
-		// 	this.focusTracker.add( view.element );
-		// })
+    views.forEach(view => {
+		// 	// Register the view as focusable.
+			this._focusables.add( view );
+
+			// Register the view in the focus tracker.
+			this.focusTracker.add( view.element );
+		})
 
     // Mainly for closing using "Esc" and navigation using "Tab"
     this.keystrokes.listenTo(this.element)

@@ -7,7 +7,9 @@ import TableIcon from '@ckeditor/ckeditor5-table/theme/icons/table-properties.sv
 import TablePropertiesView from './TablePropertiesView'
 import TableHeaderCommand from './Commands/TableHeadersCommand'
 import TableClassCommand from './Commands/TableClassCommand'
-
+import ToggleClassCommand from './Commands/ToggleClassCommand'
+import TableUtils from '@ckeditor/ckeditor5-table/src/tableutils'
+import { downcastTable, tableUpcast } from './helpers'
 
 const propertyToCommandMap = {
   tableHeaders: 'tableHeaders',
@@ -15,23 +17,11 @@ const propertyToCommandMap = {
   tableWidth: 'tableWidth',
   tableBorder: 'tableBorder',
   tableAltBGColor: 'tableAltBGColor'
-};
-
-function tableUpcast (dataFilter) {
-  return ( evt, data, conversionApi ) => {    
-    if (!data.modelRange) return
-    const viewTableElement = data.viewItem
-    const viewAttributes = dataFilter.processViewAttributes(viewTableElement, conversionApi)
-
-    if (viewAttributes?.classes) conversionApi.writer.setAttribute('class', viewAttributes.classes.join(' ').trim(), data.modelRange)
-    if (viewAttributes?.styles) conversionApi.writer.setAttribute('style', viewAttributes.styles, data.modelRange)
-    if (viewAttributes?.attributes) Object.entries(viewAttributes.attributes).map(([key, value]) => conversionApi.writer.setAttribute(key, value, data.modelRange))
-  }
 }
 
 class TablePropertiesUI extends Plugin {
   static get requires () {
-    return [ContextualBalloon, DataFilter]
+    return [ContextualBalloon, DataFilter, TableUtils]
   }
 
   init () {
@@ -39,6 +29,8 @@ class TablePropertiesUI extends Plugin {
     const t = editor.t
 
 		const dataFilter = editor.plugins.get(DataFilter)
+
+    const tableUtils = editor.plugins.get(TableUtils)
 
     this._balloon = editor.plugins.get(ContextualBalloon)
 
@@ -50,7 +42,7 @@ class TablePropertiesUI extends Plugin {
 
     this._defaultTableProperties = {
       ...getDefaultProperties(this.tableProperties),
-      tableBorder: 'border'
+      // tableBorder: 'border'
     }
 
     editor.commands.add('tableHeaders', new TableHeaderCommand(editor))
@@ -58,7 +50,6 @@ class TablePropertiesUI extends Plugin {
     editor.commands.add('tableWidth', new TableClassCommand(editor, this.tableProperties['tableWidth']))
     editor.commands.add('tableBorder', new TableClassCommand(editor, 'border'))
     editor.commands.add('tableAltBGColor', new TableClassCommand(editor, 'alternate-row-color'))
-  
     const conversions = ['style', 'class', 'border']
     
     conversions.forEach(c => {
@@ -75,12 +66,21 @@ class TablePropertiesUI extends Plugin {
     })
 
     editor.conversion.for( 'upcast' ).add(dispatcher => {
-      dispatcher.on('element:figure', tableUpcast(dataFilter, 'figure'))
+      dispatcher.on('element:figure', tableUpcast(dataFilter))
     })
     
     editor.conversion.for( 'upcast' ).add(dispatcher => {
-      dispatcher.on('element:table', tableUpcast(dataFilter, 'table'))
+      dispatcher.on('element:table', tableUpcast(dataFilter))
     })
+
+    // editor.conversion.for( 'editingDowncast' ).elementToStructure( {
+		// 	model: {
+		// 		name: 'table',
+		// 		attributes: [ 'headingRows' ]
+		// 	},
+		// 	view: downcastTable( tableUtils, { asWidget: true } ),
+    //   converterPriority: 'high'
+		// } );
 
     editor.ui.componentFactory.add('tableProperties', locale => {
       const view = new ButtonView(locale)
@@ -166,7 +166,7 @@ class TablePropertiesUI extends Plugin {
     const viewDocument = editor.editing.view.document
 
     if (!getTableWidgetAncestor(viewDocument.selection)) this._hideView()
-    else if (this._isViewVisible) repositionContextualBalloon(editor, 'cell')
+    else if (this._isViewVisible) repositionContextualBalloon(editor, 'table')
   }
 
   _hideView () {
