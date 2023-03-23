@@ -7,7 +7,6 @@ import TableIcon from '@ckeditor/ckeditor5-table/theme/icons/table-properties.sv
 import TablePropertiesView from './TablePropertiesView'
 import TableHeaderCommand from './Commands/TableHeadersCommand'
 import TableClassCommand from './Commands/TableClassCommand'
-import ToggleClassCommand from './Commands/ToggleClassCommand'
 import TableUtils from '@ckeditor/ckeditor5-table/src/tableutils'
 import { downcastTable, tableUpcast } from './helpers'
 
