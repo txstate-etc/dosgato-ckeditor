@@ -14,7 +14,7 @@ export function tableUpcast (dataFilter) {
 
     if (viewAttributes?.classes) {
       const classes = viewAttributes.classes.join(' ').trim().split(' ')
-      if (viewAttributes?.attributes.border) classes.push('border')
+      if (viewAttributes?.attributes?.border) classes.push('border')
       conversionApi.writer.setAttribute('class', classes.join(' '), data.modelRange)
     }
     if (viewAttributes?.styles) conversionApi.writer.setAttribute('style', viewAttributes.styles, data.modelRange)
