@@ -55,7 +55,7 @@ export default class AssetBrowser extends Plugin {
     chooserButton.bind('isEnabled').to(linkCommand, 'isEnabled')
     chooserButton.on('execute', (writer) => {
       const selection = editor.model.document.selection
-      config.browseLink(linkFormView.urlInputView.value, linkUrl => {
+      config.browseLink(linkFormView.urlInputView.fieldView.value, linkUrl => {
         editor.model.change(writer => {
           writer.setSelection(selection)
         })
