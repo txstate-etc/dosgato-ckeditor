@@ -8,7 +8,7 @@ import TablePropertiesView from './TablePropertiesView'
 import TableHeaderCommand from './Commands/TableHeadersCommand'
 import TableClassCommand from './Commands/TableClassCommand'
 import TableUtils from '@ckeditor/ckeditor5-table/src/tableutils'
-import { downcastTable, tableUpcast } from './helpers'
+import { tableUpcast } from './helpers'
 
 const propertyToCommandMap = {
   tableHeaders: 'tableHeaders',
@@ -28,8 +28,6 @@ class TablePropertiesUI extends Plugin {
     const t = editor.t
 
 		const dataFilter = editor.plugins.get(DataFilter)
-
-    const tableUtils = editor.plugins.get(TableUtils)
 
     this._balloon = editor.plugins.get(ContextualBalloon)
 
@@ -71,15 +69,6 @@ class TablePropertiesUI extends Plugin {
     editor.conversion.for( 'upcast' ).add(dispatcher => {
       dispatcher.on('element:table', tableUpcast(dataFilter))
     })
-
-    // editor.conversion.for( 'editingDowncast' ).elementToStructure( {
-		// 	model: {
-		// 		name: 'table',
-		// 		attributes: [ 'headingRows' ]
-		// 	},
-		// 	view: downcastTable( tableUtils, { asWidget: true } ),
-    //   converterPriority: 'high'
-		// } );
 
     editor.ui.componentFactory.add('tableProperties', locale => {
       const view = new ButtonView(locale)

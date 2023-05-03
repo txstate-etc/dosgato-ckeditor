@@ -1,7 +1,7 @@
 {
   "name": "@dosgato/ckeditor",
   "version": "1.0.13",
-  "description": "Custom CKEditor build for @dosgato/dialog.",
+  "description": "Custom CKEditor build for @dosgato/dialog. https://www.npmjs.com/package/@dosgato/ckeditor",
   "keywords": [
     "dosgato",
     "ckeditor5"
