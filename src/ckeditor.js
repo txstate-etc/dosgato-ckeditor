@@ -37,6 +37,7 @@ import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformatio
 import Undo from '@ckeditor/ckeditor5-undo/src/undo'
 import TableProperties from './Table/TablePropertiesUI-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
+import ImageTextAlternative from './Image/ImageTextAlternative.js'
 import { htmlSupport } from './utils/defaultConfigs.js'
 import './ckeditor.css'
 
@@ -58,6 +59,7 @@ Editor.builtinPlugins = [
   ImageCaption,
   ImageResize,
   ImageStyle,
+  ImageTextAlternative,
   ImageToolbar,
   Indent,
   Italic,
