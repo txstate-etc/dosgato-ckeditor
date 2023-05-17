@@ -1,7 +1,7 @@
 {
   "name": "@dosgato/ckeditor",
-  "version": "1.0.14",
-  "description": "Custom CKEditor build for @dosgato/dialog. https://www.npmjs.com/package/@dosgato/ckeditor",
+  "version": "1.0.13",
+  "description": "Custom CKEditor build for @dosgato/dialog.",
   "keywords": [
     "dosgato",
     "ckeditor5"
@@ -52,11 +52,11 @@
   },
   "author": "CKSource (http://cksource.com/)",
   "license": "GPL-2.0-or-later",
-  "homepage": "https://ckeditor.com/ckeditor-5",
+  "homepage": " https://www.npmjs.com/package/@dosgato/ckeditor",
   "bugs": "https://github.com/ckeditor/ckeditor5/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ckeditor/ckeditor5.git",
+    "url": "https://github.com/txstate-etc/dosgato-ckeditor",
     "directory": "packages/ckeditor5-build-classic"
   },
   "scripts": {

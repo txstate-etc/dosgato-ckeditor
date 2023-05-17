@@ -7,6 +7,10 @@ import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat.js'
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js'
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js'
+import Code from '@ckeditor/ckeditor5-basic-styles/src/code.js'
+import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript.js'
+import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript.js'
+import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough.js'
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js'
 import Font from '@ckeditor/ckeditor5-font/src/font'
 import GeneralHtmlSupport from '@ckeditor/ckeditor5-html-support/src/generalhtmlsupport'
@@ -49,6 +53,7 @@ Editor.builtinPlugins = [
   Autoformat,
   BlockQuote,
   Bold,
+  Code,
   CustomTableToolbar,
   Essentials,
   Font,
@@ -71,6 +76,9 @@ Editor.builtinPlugins = [
   SourceEditing,
   SpecialCharacters,
   SpecialCharactersEssentials,
+  Strikethrough,
+  Subscript,
+  Superscript,
   Table,
   TableCellProperties,
   TableProperties,
@@ -87,11 +95,7 @@ const defaultConfig = {
       { title: 'Title', view: 'h2', model: 'heading2', class: 'ck-heading_heading2' },
       { title: 'Subtitle', view: 'h3', model: 'heading3', class: 'ck-heading_heading3' },
       { title: 'Subsubtitle', view: 'h4', model: 'heading4', class: 'ck-heading_heading4' },
-      { title: 'Preformatted Text', view: 'pre', model: 'preformattedText', class: 'ck-heading-preformattedText' },
-      { title: 'Superscript', view: 'sup', model: 'superscript', class: 'ck-heading-superscript' },
-      { title: 'Subscript', view: 'sub', model: 'subscript', class: 'ck-heading-subscript' },
-      { title: 'Strike Out', view: 's', model: 'strikeout', class: 'ck-heading-strikeout' },
-      { title: 'Computer Code', view: 'code', model: 'code', class: 'ck-heading-code' }
+      { title: 'Preformatted Text', view: 'pre', model: 'preformattedText', class: 'ck-heading-preformattedText' }
     ]
   },
   htmlSupport: {
