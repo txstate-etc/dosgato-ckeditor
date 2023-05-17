@@ -53,7 +53,7 @@
   "author": "CKSource (http://cksource.com/)",
   "license": "GPL-2.0-or-later",
   "homepage": " https://www.npmjs.com/package/@dosgato/ckeditor",
-  "bugs": "https://github.com/ckeditor/ckeditor5/issues",
+  "bugs": "https://github.com/txstate-etc/dosgato-ckeditor/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/txstate-etc/dosgato-ckeditor",
