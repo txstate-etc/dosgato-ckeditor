@@ -44,6 +44,7 @@ import ImageTextAlternative from './Image/ImageTextAlternative.js'
 import Anchor from './Anchor/AnchorUI.js'
 import Link from './Link/LinkUI.js'
 import { htmlSupport } from './utils/defaultConfigs.js'
+import { anchorImage } from './icons/anchor.js'
 import './ckeditor.css'
 
 class Editor extends ClassicEditor {}
@@ -91,9 +92,6 @@ Editor.builtinPlugins = [
 ]
 
 const extraConfig = {
-  anchor: {
-    imageUrl: 'anchor.png'
-  },
   toolbar: {
     items: [
       'bold',
@@ -185,6 +183,9 @@ const extraConfig = {
 }
 
 const defaultConfig = {
+  anchor: {
+    imageUrl: anchorImage
+  },
   heading: {
     options: [
       { title: 'Paragraph', model: 'paragraph', class: 'ck-heading_paragraph' },

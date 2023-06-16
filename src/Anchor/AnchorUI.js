@@ -4,8 +4,9 @@ import { ContextualBalloon, clickOutsideHandler } from '@ckeditor/ckeditor5-ui'
 import { ClickObserver } from '@ckeditor/ckeditor5-engine'
 import { findAnchorElementAncestor, isAnchorElement } from '../utils/helpers'
 import AnchorView from './AnchorView'
-import { WidgetToolbarRepository, isWidget } from '@ckeditor/ckeditor5-widget'
+import { WidgetToolbarRepository } from '@ckeditor/ckeditor5-widget'
 import AnchorEditing from './AnchorEditing'
+import AnchorIcon from '../icons/flag.svg'
 
 class AnchorUI extends Plugin {
   static get requires () {
@@ -46,8 +47,8 @@ class AnchorUI extends Plugin {
 
       view.set({
         label: t('Anchor'),
-        withText: true,
-        withTooltip: true
+        icon: AnchorIcon,
+        tooltip: true
       })
 
       this.listenTo(view, 'execute', () => {
