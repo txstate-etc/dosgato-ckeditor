@@ -34,6 +34,8 @@ export default class AnchorEditing extends Plugin {
     const editor = this.editor
     const schema = editor.model.schema
 
+    const anchorImage = editor.config.get('anchor.imageUrl')
+
     // Allow link attribute on all inline nodes.
     editor.model.schema.extend('$text', { allowAttributes: 'anchorId' })
 
@@ -61,7 +63,7 @@ export default class AnchorEditing extends Plugin {
         const linkElement = writer.createEmptyElement('img', { 
           id, 
           name: id, 
-          src: 'anchor.png',
+          src: anchorImage || 'anchor.png',
           style: 'width: 20px; margin-bottom: -6px;'
         }, { priority: 5 })
         writer.setCustomProperty('anchor', true, linkElement)

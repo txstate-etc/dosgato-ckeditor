@@ -90,23 +90,10 @@ Editor.builtinPlugins = [
   AssetBrowser
 ]
 
-const defaultConfig = {
-  heading: {
-    options: [
-      { title: 'Paragraph', model: 'paragraph', class: 'ck-heading_paragraph' },
-      { title: 'Title', view: 'h2', model: 'heading2', class: 'ck-heading_heading2' },
-      { title: 'Subtitle', view: 'h3', model: 'heading3', class: 'ck-heading_heading3' },
-      { title: 'Subsubtitle', view: 'h4', model: 'heading4', class: 'ck-heading_heading4' },
-      { title: 'Preformatted Text', view: 'pre', model: 'preformattedText', class: 'ck-heading-preformattedText' }
-    ]
-  },
-  htmlSupport: {
-    allow: htmlSupport
-  },
-  language: 'en'
-}
-
 const extraConfig = {
+  anchor: {
+    imageUrl: 'anchor.png'
+  },
   toolbar: {
     items: [
       'bold',
@@ -196,6 +183,24 @@ const extraConfig = {
     }
   }
 }
+
+const defaultConfig = {
+  heading: {
+    options: [
+      { title: 'Paragraph', model: 'paragraph', class: 'ck-heading_paragraph' },
+      { title: 'Title', view: 'h2', model: 'heading2', class: 'ck-heading_heading2' },
+      { title: 'Subtitle', view: 'h3', model: 'heading3', class: 'ck-heading_heading3' },
+      { title: 'Subsubtitle', view: 'h4', model: 'heading4', class: 'ck-heading_heading4' },
+      { title: 'Preformatted Text', view: 'pre', model: 'preformattedText', class: 'ck-heading-preformattedText' }
+    ]
+  },
+  htmlSupport: {
+    allow: htmlSupport
+  },
+  language: 'en',
+  ...extraConfig
+}
+
 
 Editor.defaultConfig = defaultConfig
 
