@@ -29,20 +29,22 @@ export default class LinkCommand extends Command {
 		const selection = model.document.selection;
 		
 		model.change( writer => {
-			const attributes = toMap( selection.getAttributes() );
-
-			attributes.set( 'anchorId', href );
-			attributes.set( 'id', href );
-
-			const imageElement = writer.createElement( 'anchorId', attributes );
-
-			
-			const { end: positionAfter } = model.insertObject(imageElement)
-			writer.setSelection( positionAfter );
-
-			// Remove the `anchorId` attribute and all link decorators from the selection.
-			// It stops adding a new content into the link element.
-			writer.removeSelectionAttribute('anchorId')
+			if (href !== '') {
+				const attributes = toMap( selection.getAttributes() );
+				
+				attributes.set( 'anchorId', href );
+				attributes.set( 'id', href );
+				
+				const imageElement = writer.createElement( 'anchorId', attributes );
+				
+				
+				const { end: positionAfter } = model.insertObject(imageElement)
+				writer.setSelection( positionAfter );
+				
+				// Remove the `anchorId` attribute and all link decorators from the selection.
+				// It stops adding a new content into the link element.
+				writer.removeSelectionAttribute('anchorId')
+			}
 		})
 	}
 }
