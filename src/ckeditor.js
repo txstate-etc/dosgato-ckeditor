@@ -25,7 +25,6 @@ import {
 } from '@ckeditor/ckeditor5-image'
 import Indent from '@ckeditor/ckeditor5-indent/src/indent.js'
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js'
-import Link from '@ckeditor/ckeditor5-link/src/link.js'
 import List from '@ckeditor/ckeditor5-list/src/list.js'
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js'
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice.js'
@@ -42,6 +41,8 @@ import Undo from '@ckeditor/ckeditor5-undo/src/undo'
 import TableProperties from './Table/TablePropertiesUI-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
 import ImageTextAlternative from './Image/ImageTextAlternative.js'
+import Anchor from './Anchor/AnchorUI.js'
+import Link from './Link/LinkUI.js'
 import { htmlSupport } from './utils/defaultConfigs.js'
 import './ckeditor.css'
 
@@ -50,6 +51,7 @@ class Editor extends ClassicEditor {}
 // Plugins to include in the build.
 Editor.builtinPlugins = [
   Alignment,
+  Anchor,
   Autoformat,
   BlockQuote,
   Bold,
@@ -104,6 +106,96 @@ const defaultConfig = {
   language: 'en'
 }
 
+const extraConfig = {
+  toolbar: {
+    items: [
+      'bold',
+      'italic',
+      'strikethrough',
+      'superscript',
+      'subscript',
+      'code',
+      'removeFormat',
+      '|',
+      'horizontalLine',
+      'blockQuote',
+      'specialCharacters',
+      '|',
+      'link',
+      'anchor',
+      '|',
+      'insertTable',
+      '|',
+      'assetBrowserImage',
+      '|',
+      'undo',
+      'redo',
+      '-',
+      'sourceEditing',
+      '|',
+      'alignment',
+      'numberedList',
+      'bulletedList',
+      'indent',
+      'outdent',
+      '|',
+      'heading',
+      '|',
+      'fontColor'
+    ],
+    shouldNotGroupWhenFull: true
+  },
+  image: {
+    toolbar: [
+      'imageStyle:inline',
+      'imageStyle:wrapText',
+      'imageStyle:breakText',
+      '|',
+      'toggleImageCaption',
+      'imageTxtAlternative'
+    ]
+  },
+  fontColor: {
+    colors: ['#222222', '#465147', '#654D3C', '#7D2F19', '#764A33', '#b30e1b']
+  },
+  table: {
+    contentToolbar: ['tableProperties', 'customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties'],
+    tableProperties: {
+      tableWidth: [
+        { label: '100%', value: 'full-width' },
+        { label: 'Auto', value: 'auto-width' }
+      ],
+      tableHeaders: [
+        { label: 'None', value: 'none' },
+        { label: 'First Row', value: 'row' },
+        { label: 'First Column', value: 'column' },
+        { label: 'Both', value: 'both' }
+      ],
+      tableHeaderColors: [
+        { label: 'None', value: 'header-color-none' },
+        { label: 'Coffee', value: 'header-color-coffee', default: true },
+        { label: 'Cactus', value: 'header-color-cactus' },
+        { label: 'Tumbleweed', value: 'header-color-tumbleweed' },
+        { label: 'Silver', value: 'header-color-silver' },
+        { label: 'Sienna', value: 'header-color-sienna' },
+        { label: 'Pale Brown', value: 'header-color-palebrown' },
+        { label: 'Maize', value: 'header-color-maize' }
+      ],
+      templateColorLabel: 'Wittliff Colors',
+    },
+    tableCellProperties: {
+      backgroundColors: [
+        { label: 'Cactus', color: '#465147' },
+        { label: 'Coffee', color: '#654D3C' },
+        { label: 'Tumbleweed', color: '#C69D77' },
+        { label: 'Silver', color: '#C8BEB7' },
+        { label: 'Sienna', color: '#7D2F19' },
+        { label: 'Pale Brown', color: '#764A33' },
+        { label: 'Maize', color: '#F3C9A3' }
+      ]
+    }
+  }
+}
 
 Editor.defaultConfig = defaultConfig
 
