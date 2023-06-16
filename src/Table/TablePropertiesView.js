@@ -1,15 +1,8 @@
 import { icons } from '@ckeditor/ckeditor5-core'
-import { View, ButtonView, ViewCollection, FocusCycler, FormHeaderView, submitHandler, addListToDropdown, Model, LabeledFieldView, createLabeledDropdown } from '@ckeditor/ckeditor5-ui'
+import { View, ButtonView, ViewCollection, FocusCycler, FormHeaderView, submitHandler } from '@ckeditor/ckeditor5-ui'
 import FormRowView from '@ckeditor/ckeditor5-table/src/ui/formrowview'
-import { FocusTracker, KeystrokeHandler, Collection } from '@ckeditor/ckeditor5-utils'
-
-function getLabels (t, c) {
-  return c.reduce((acc, curr) => {
-    acc[curr.value] = t(curr.label)
-    return acc
-  }, {})
-}
-
+import { FocusTracker, KeystrokeHandler } from '@ckeditor/ckeditor5-utils'
+import { createDropdown } from '../utils/helpers'
 export default class TablePropertiesView extends View {
 
   constructor (locale, options) {
@@ -43,7 +36,7 @@ export default class TablePropertiesView extends View {
 
     this.altBGButtonView = altBGButtonView
 
-    const tableWidthsDropdown = this._createDropdown('tableWidth', 'Table Width', this.options.tableWidth)
+    const tableWidthsDropdown = createDropdown(this, { key: 'tableWidth', label: 'Table Width', items: this.options.tableWidth })
 
     this.tableWidthsDropdown = tableWidthsDropdown
     
@@ -168,44 +161,10 @@ export default class TablePropertiesView extends View {
     })
   }
 
-  _createDropdown (key, label, items) {
-    const locale = this.locale
-    const t = this.t
-    
-    const headerView = new LabeledFieldView(locale, createLabeledDropdown)
-
-    const labels = getLabels(t, items)
-
-    headerView.set({
-			label: t(label)
-		})
-
-    headerView.fieldView.buttonView.set({
-      label: t(label),
-      isOn: false,
-      withText: true,
-    })
-
-    headerView.fieldView.buttonView.bind('label').to( this, key, value => {
-			return labels[value] || Object.values(labels)[0]
-		})
-
-		headerView.fieldView.on('execute', evt => { this[key] = evt.source.commandParam })
-    
-		headerView.bind('isEmpty').to(this, key, value => !value)
-
-    addListToDropdown(
-      headerView.fieldView,
-      getDropdownItemsDefinitions(t, items)
-    )
-
-    return headerView
-  }
-
   _createHeaderButtons () {
     return {
-      headersDropdownView: this._createDropdown('tableHeaders', 'Headers', this.options.tableHeaders),
-      tableHeaderColorsDropdownView: this._createDropdown('tableHeaderColors', 'Header Colors', this.options.tableHeaderColors)
+      headersDropdownView: createDropdown(this, { key: 'tableHeaders', label: 'Headers', items: this.options.tableHeaders }),
+      tableHeaderColorsDropdownView: createDropdown(this, { key: 'tableHeaderColors', label: 'Header Colors', items: this.options.tableHeaderColors })
     }
   }
 
@@ -279,23 +238,3 @@ export default class TablePropertiesView extends View {
   }
 }
 
-function getDropdownItemsDefinitions (t, items) {
-  const itemDefinitions = new Collection()
-  const labels = getLabels(t, items)
-
-  for (const item in labels) {
-    const definition = {
-      type: 'button',
-      model: new Model({
-        commandParam: item,
-        label: labels[item],
-        withText: true
-      })
-    }
-
-    // Add the item definition to the collection.
-    itemDefinitions.add(definition)
-  }
-
-  return itemDefinitions
-}
