@@ -72,7 +72,6 @@ export function createDropdown (view, { key, label, items }) {
 
 
 export function getDropdownItemsDefinitions (t, items) {
-  console.error(items)
   const itemDefinitions = new Collection()
   const labels = getLabels(t, items)
 

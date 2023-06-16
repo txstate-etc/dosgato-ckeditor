@@ -1,9 +1,6 @@
 import { Plugin } from '@ckeditor/ckeditor5-core'
 import { ButtonView } from '@ckeditor/ckeditor5-ui'
-import { LinkUI } from '@ckeditor/ckeditor5-link'
-import { viewToModelPositionOutsideModelElement } from '@ckeditor/ckeditor5-widget'
 import ImageIcon from '@ckeditor/ckeditor5-core/theme/icons/image.svg'
-import AssetLinkIcon from './assetlink.svg'
 import './assetbrowser.css'
 
 export default class AssetBrowser extends Plugin {
@@ -41,41 +38,5 @@ export default class AssetBrowser extends Plugin {
 
       return view
     })
-
-    // add a chooser button to the link form
-    const linkUI = editor.plugins.get(LinkUI)
-    const linkFormView = linkUI.formView
-    const chooserButton = new ButtonView(this.locale)
-    const linkCommand = editor.commands.get('link')
-    chooserButton.set({
-      label: 'Browse',
-      withText: true,
-      tooltip: true
-    })
-    chooserButton.bind('isEnabled').to(linkCommand, 'isEnabled')
-    chooserButton.on('execute', (writer) => {
-      const selection = editor.model.document.selection
-      config.browseLink(linkFormView.urlInputView.fieldView.value, linkUrl => {
-        editor.model.change(writer => {
-          writer.setSelection(selection)
-        })
-        linkUI._showUI(true)
-        linkUI._addFormView()
-        linkFormView.urlInputView.fieldView.value = ''
-        linkFormView.urlInputView.fieldView.value = linkUrl
-      })
-    })
-    linkFormView.once('render', () => {
-      chooserButton.render()
-      linkFormView.registerChild(chooserButton)
-      linkFormView.element.insertBefore(chooserButton.element, linkFormView.saveButtonView.element)
-    })
-
-    this.listenTo(editor.editing.view.document, 'click', ( evt, data ) => {
-			if (editor.model.document.selection.getAttribute('linkHref')) {
-				// Prevent browser navigation when clicking a link.
-				data.preventDefault();
-			}
-		}, { priority: 'high' } );
   }
 }
