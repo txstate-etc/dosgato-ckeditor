@@ -311,27 +311,17 @@ class AnchorUI extends Plugin {
     const selection = view.document.selection
     const firstPosition = selection.getFirstPosition()
     const selectedElement = selection.getSelectedElement()
-    let parent = firstPosition.parent
 
     if (!firstPosition) return null
 
-    while (parent) {
-      if (parent.is('element') && isAnchorElement(parent)) {
-        return parent
+    for ( const range of selection.getRanges() ) {
+      for ( const value of range ) {
+        const node = value.item
+        console.log(node)
       }
-      parent = parent.parent
     }
-
-    if (selectedElement) {
-      for (const { item } of view.createRangeIn(selectedElement)) {
-        console.log(item)
-      }
-
-      if (isAnchorElement(selectedElement)) return selectedElement
-    }
-
-    const ancestor = findAnchorElementAncestor(firstPosition)
-    if (ancestor) return ancestor
+  
+    if (isAnchorElement(selectedElement)) return selectedElement
 
     return null
   }
