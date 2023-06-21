@@ -198,8 +198,7 @@ const defaultConfig = {
   htmlSupport: {
     allow: htmlSupport
   },
-  language: 'en',
-  ...extraConfig
+  language: 'en'
 }
 
 
