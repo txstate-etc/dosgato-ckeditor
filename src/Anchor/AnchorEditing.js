@@ -1,7 +1,6 @@
 import { Plugin } from '@ckeditor/ckeditor5-core'
-import { Input, TwoStepCaretMovement } from '@ckeditor/ckeditor5-typing'
-import { ClipboardPipeline } from '@ckeditor/ckeditor5-clipboard'
 import AnchorCommand from './Commands/anchorcommand'
+import { Widget, toWidget } from '@ckeditor/ckeditor5-widget'
 export default class AnchorEditing extends Plugin {
   /**
    * @inheritDoc
@@ -15,7 +14,7 @@ export default class AnchorEditing extends Plugin {
    */
   static get requires () {
     // Clipboard is required for handling cut and paste events while typing over the link.
-    return [TwoStepCaretMovement, Input, ClipboardPipeline]
+    return [Widget]
   }
 
   /**
@@ -47,8 +46,8 @@ export default class AnchorEditing extends Plugin {
 
     editor.conversion.for('dataDowncast').elementToElement({
       model: 'anchorId',
-      view: (thing, { writer }) => {
-        const id = thing.getAttribute('id')
+      view: (element, { writer }) => {
+        const id = element.getAttribute('id')
         const linkElement = writer.createEmptyElement('a', { id, name: id }, { priority: 5 })
         writer.setCustomProperty('anchor', true, linkElement)
         linkElement._setCustomProperty('anchor', true)
@@ -58,17 +57,22 @@ export default class AnchorEditing extends Plugin {
 
     editor.conversion.for('editingDowncast').elementToElement({
       model: 'anchorId',
-      view: (thing, { writer }) => {
-        const id = thing.getAttribute('id')
+      view: (element, { writer }) => {
+        const id = element.getAttribute('id')
+        const placeholderView = writer.createContainerElement( 'span', {
+          class: 'placeholder'
+        })
+
         const linkElement = writer.createEmptyElement('img', { 
           id, 
           name: id, 
           src: anchorImage || 'anchor.png',
           style: 'width: 20px; margin-bottom: -6px;'
         }, { priority: 5 })
-        writer.setCustomProperty('anchor', true, linkElement)
-        linkElement._setCustomProperty('anchor', true)
-        return linkElement
+
+        writer.setCustomProperty('anchor', true, placeholderView)
+        writer.insert(writer.createPositionAt( placeholderView, 0 ), linkElement)
+        return toWidget(placeholderView, writer)
       }
     })
 

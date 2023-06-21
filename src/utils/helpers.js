@@ -23,7 +23,7 @@ export function findAnchorElementAncestor( position ) {
 }
 
 export function isAnchorElement( node ) {
-	return !!node && node.is( 'element', 'anchorId' )
+	return !!node && node.getCustomProperty('anchor')
 }
 
 
