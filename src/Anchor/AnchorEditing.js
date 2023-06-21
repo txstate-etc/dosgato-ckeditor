@@ -50,7 +50,6 @@ export default class AnchorEditing extends Plugin {
         const id = element.getAttribute('id')
         const linkElement = writer.createEmptyElement('a', { id, name: id }, { priority: 5 })
         writer.setCustomProperty('anchor', true, linkElement)
-        linkElement._setCustomProperty('anchor', true)
         return linkElement
       }
     })
@@ -59,9 +58,7 @@ export default class AnchorEditing extends Plugin {
       model: 'anchorId',
       view: (element, { writer }) => {
         const id = element.getAttribute('id')
-        const placeholderView = writer.createContainerElement( 'span', {
-          class: 'placeholder'
-        })
+        const placeholderView = writer.createContainerElement( 'span')
 
         const linkElement = writer.createEmptyElement('img', { 
           id, 
@@ -83,7 +80,9 @@ export default class AnchorEditing extends Plugin {
       },
       model: ( viewElement, { writer } ) => {
         const name = viewElement.getAttribute('name')
-        return writer.createElement( 'anchorId', { id: name, name } );
+        const element = writer.createElement( 'anchorId', { id: name, name } );
+        writer.setAttribute('anchorId', name, element)
+        return element
       }
     })
 
