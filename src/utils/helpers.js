@@ -22,8 +22,12 @@ export function findAnchorElementAncestor( position ) {
 	return position.getAncestors().find( ancestor => isAnchorElement( ancestor ) );
 }
 
-export function isAnchorElement( node ) {
-	return !!node && node.getCustomProperty('anchor')
+export function isAnchorElement( modelElement ) {
+	return !!modelElement && modelElement.is( 'element', 'anchorId' )
+}
+
+export function hasAnchorProperty (node) {
+  return !!node && node.getCustomProperty('anchor')
 }
 
 

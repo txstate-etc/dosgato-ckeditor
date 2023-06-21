@@ -2,7 +2,7 @@ import Plugin from '@ckeditor/ckeditor5-core/src/plugin'
 import { ButtonView } from '@ckeditor/ckeditor5-ui'
 import { ContextualBalloon, clickOutsideHandler } from '@ckeditor/ckeditor5-ui'
 import { ClickObserver } from '@ckeditor/ckeditor5-engine'
-import { isAnchorElement } from '../utils/helpers'
+import { hasAnchorProperty } from '../utils/helpers'
 import AnchorView from './AnchorView'
 import { WidgetToolbarRepository } from '@ckeditor/ckeditor5-widget'
 import AnchorEditing from './AnchorEditing'
@@ -314,7 +314,7 @@ class AnchorUI extends Plugin {
 
     if (!firstPosition) return null
 
-    if (isAnchorElement(selectedElement)) return selectedElement
+    if (hasAnchorProperty(selectedElement)) return selectedElement
 
     return null
   }
