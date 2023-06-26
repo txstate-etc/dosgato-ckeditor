@@ -6,7 +6,7 @@ const strictAllowedStyles = 'background, background-attachment, background-clip,
 
 export const htmlSupport = strictAllowedContent.split(' ').map(name => ({
   name,
-  styles: strictAllowedStyles.split(', '),
+  styles: strictAllowedStyles.split(', ').map(style => ({ [style]: true })),
   classes: true,
   attributes: true
 }))
