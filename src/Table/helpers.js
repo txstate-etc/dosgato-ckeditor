@@ -10,15 +10,29 @@ export function tableUpcast (dataFilter) {
   return ( evt, data, conversionApi ) => {    
     if (!data.modelRange) return
     const viewTableElement = data.viewItem
-    const viewAttributes = dataFilter.processViewAttributes(viewTableElement, conversionApi)
+    const viewAttributes = {}
 
-    if (viewAttributes?.classes) {
-      const classes = viewAttributes.classes.join(' ').trim().split(' ')
-      if (viewAttributes?.attributes?.border) classes.push('border')
+		for (const value of viewTableElement.getAttributes()) {
+			viewAttributes[value[0]] = value[1]
+		}
+
+    if (viewAttributes?.class) {
+      const classes = viewAttributes.class.replace('table', '').trim().split(' ')
+      if (viewAttributes?.border === '1') classes.push('border')
       conversionApi.writer.setAttribute('class', classes.join(' '), data.modelRange)
     }
-    if (viewAttributes?.styles) conversionApi.writer.setAttribute('style', viewAttributes.styles, data.modelRange)
-    if (viewAttributes?.attributes) Object.entries(viewAttributes.attributes).map(([key, value]) => conversionApi.writer.setAttribute(key, value, data.modelRange))
+
+    if (viewAttributes?.style) {
+			const styles = viewAttributes.style.split(';').reduce((acc, s) => {
+				if (!s) return acc
+				const style = s.split(':').map(s => s.trim())
+				if (style.length < 1 || !style[1]) return acc
+				acc[style[0]] = style[1]
+				return acc
+			}, {})
+
+			conversionApi.writer.setAttribute('style', styles, data.modelRange)
+		}
   }
 }
 
