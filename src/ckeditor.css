@@ -19,3 +19,7 @@
 figure.image + figure.image.image-style-align-right, figure.image + figure.image.image-style-align-left {
   margin-top: 0;
 }
+
+.ck-horizontal-line {
+  clear: both;
+}
