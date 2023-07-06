@@ -15,3 +15,7 @@
 .ck.ck-button.ck-heading-code span {
   font-family: monospace;
 }
+
+figure.image + figure.image.image-style-align-right, figure.image + figure.image.image-style-align-left {
+  margin-top: 0;
+}
