@@ -42,7 +42,7 @@ import TableProperties from './Table/TablePropertiesUI-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
 import ImageTextAlternative from './Image/ImageTextAlternative.js'
 import Anchor from './Anchor/AnchorUI.js'
-import Link from './Link/LinkUI.js'
+import Link, { LinkImage } from './Link/LinkUI.js'
 import { htmlSupport } from './utils/defaultConfigs.js'
 import { anchorImage } from './icons/anchor.js'
 import './ckeditor.css'
@@ -72,6 +72,7 @@ Editor.builtinPlugins = [
   Indent,
   Italic,
   Link,
+  LinkImage,
   List,
   Paragraph,
   PasteFromOffice,
@@ -137,7 +138,9 @@ const extraConfig = {
       'imageStyle:breakText',
       '|',
       'toggleImageCaption',
-      'imageTxtAlternative'
+      'imageTxtAlternative',
+      '|',
+      'browseLinkImage'
     ]
   },
   fontColor: {

@@ -1,16 +1,17 @@
 import { Plugin } from '@ckeditor/ckeditor5-core'
-import { ContextualBalloon, clickOutsideHandler } from '@ckeditor/ckeditor5-ui'
-import { AutoLink, LinkEditing, LinkUI as LUI } from '@ckeditor/ckeditor5-link'
+import { ButtonView, ContextualBalloon, clickOutsideHandler } from '@ckeditor/ckeditor5-ui'
+import { AutoLink, LinkEditing, LinkImageEditing, LinkUI as LUI, LinkImageUI as LIUI,  } from '@ckeditor/ckeditor5-link'
 import { LINK_KEYSTROKE } from '@ckeditor/ckeditor5-link/src/utils'
 import LinkFormView from './LinkFormView'
 import '../assetbrowser.css'
 import AnchorFormView from './AnchorFormView'
 import { isAnchorElement } from '../utils/helpers'
 import LinkActionsView from '@ckeditor/ckeditor5-link/src/ui/linkactionsview'
+import linkIcon from '@ckeditor/ckeditor5-link/theme/icons/link.svg'
 
 export class LinkUI extends LUI {
   static get pluginName() {
-		return 'CustomLinkUI'
+		return 'LinkUI'
 	}
 
 	init () {
@@ -69,7 +70,6 @@ export class LinkUI extends LUI {
 				this._showAnchorView()
 			}
     })
-    
 
 		// Execute link command after clicking the "Save" button.
 		this.listenTo( formView, 'submit', () => {
@@ -183,7 +183,7 @@ export class LinkUI extends LUI {
 					protocol = 'tel:'
 			}
 		}
-  
+
     return link ? protocol + link : ''
   }
 
@@ -267,7 +267,7 @@ export class LinkUI extends LUI {
 
 		this.anchorView.destroy()
 		this.anchorView = null
-		
+
     this.editor.editing.view.focus()
   }
 
@@ -286,6 +286,56 @@ export default class Link extends Plugin {
 	 * @inheritDoc
 	 */
 	static get pluginName() {
-		return 'CustomLink'
+		return 'Link'
+	}
+}
+
+export class LinkImageUI extends LIUI {
+  static get pluginName() {
+		return 'LinkImageUI';
+	}
+
+	init() {
+		const editor = this.editor;
+		const viewDocument = editor.editing.view.document;
+		const plugin = editor.plugins.get( 'LinkUI' );
+
+		this.listenTo( viewDocument, 'click', ( evt, data ) => {
+			if ( this._isSelectedLinkedImage( editor.model.document.selection ) ) {
+				// Prevent browser navigation when clicking a linked image.
+				data.preventDefault();
+
+				// Block the `LinkUI` plugin when an image was clicked.
+				// In such a case, we'd like to display the image toolbar.
+				evt.stop();
+
+				plugin._hideUI();
+			}
+		}, { priority: 'high' } );
+
+		this._createToolbarLinkImageButton();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	static get requires() {
+		return [ LinkEditing, LinkUI, 'ImageBlockEditing' ];
+	}
+}
+
+export class LinkImage extends Plugin {
+	/**
+	 * @inheritDoc
+	 */
+	static get pluginName() {
+		return 'LinkImage';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	static get requires() {
+		return [ LinkImageEditing, LinkImageUI ];
 	}
 }
