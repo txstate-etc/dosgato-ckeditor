@@ -24,6 +24,7 @@ import {
   ImageResize
 } from '@ckeditor/ckeditor5-image'
 import Indent from '@ckeditor/ckeditor5-indent/src/indent.js'
+import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock.js'
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js'
 import List from '@ckeditor/ckeditor5-list/src/list.js'
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js'
@@ -70,6 +71,7 @@ Editor.builtinPlugins = [
   ImageTextAlternative,
   ImageToolbar,
   Indent,
+  IndentBlock,
   Italic,
   Link,
   LinkImage,
