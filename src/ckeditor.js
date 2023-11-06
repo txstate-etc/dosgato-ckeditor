@@ -148,6 +148,11 @@ const extraConfig = {
   fontColor: {
     colors: ['#222222', '#465147', '#654D3C', '#7D2F19', '#764A33', '#b30e1b']
   },
+  list: {
+    properties: {
+      startIndex: true
+    }
+  },
   table: {
     contentToolbar: ['tableProperties', 'customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties'],
     tableProperties: {
