@@ -26,7 +26,7 @@ import {
 import Indent from '@ckeditor/ckeditor5-indent/src/indent.js'
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock.js'
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js'
-import List from '@ckeditor/ckeditor5-list/src/list.js'
+import { List, ListProperties } from '@ckeditor/ckeditor5-list'
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js'
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice.js'
 import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat'
@@ -76,6 +76,7 @@ Editor.builtinPlugins = [
   Link,
   LinkImage,
   List,
+  ListProperties,
   Paragraph,
   PasteFromOffice,
   RemoveFormat,
@@ -148,6 +149,12 @@ const extraConfig = {
   fontColor: {
     colors: ['#222222', '#465147', '#654D3C', '#7D2F19', '#764A33', '#b30e1b']
   },
+  list: {
+    properties: {
+      styles: false,
+      startIndex: true
+    }
+  },
   table: {
     contentToolbar: ['tableProperties', 'customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties'],
     tableProperties: {
@@ -207,6 +214,6 @@ const defaultConfig = {
 }
 
 
-Editor.defaultConfig = defaultConfig
+Editor.defaultConfig = { ...defaultConfig, ...extraConfig }
 
 export default Editor
