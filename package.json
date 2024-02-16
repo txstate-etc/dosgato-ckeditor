@@ -1,6 +1,6 @@
 {
   "name": "@dosgato/ckeditor",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Custom CKEditor build for @dosgato/dialog.",
   "keywords": [
     "dosgato",
