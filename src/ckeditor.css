@@ -1,6 +1,9 @@
 .ck.ck-button.ck-heading-preformattedText span {
   font-family: monospace;
 }
+.ck.ck-button.ck-heading_paragraph_large span, p.large-text {
+  font-size: large;
+}
 .ck.ck-button.ck-heading-superscript span {
   vertical-align: super;
   font-size: smaller;

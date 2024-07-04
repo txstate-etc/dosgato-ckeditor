@@ -201,6 +201,16 @@ const defaultConfig = {
   heading: {
     options: [
       { title: 'Paragraph', model: 'paragraph', class: 'ck-heading_paragraph' },
+      {
+        title: 'Paragraph - Large Text',
+        model: 'paragraphLarge',
+        view: {
+          name: 'p',
+          classes: 'large-text'
+        },
+        class: 'ck-heading_paragraph_large',
+        converterPriority: 'high'
+      },
       { title: 'Title', view: 'h2', model: 'heading2', class: 'ck-heading_heading2' },
       { title: 'Subtitle', view: 'h3', model: 'heading3', class: 'ck-heading_heading3' },
       { title: 'Subsubtitle', view: 'h4', model: 'heading4', class: 'ck-heading_heading4' },
