@@ -34,7 +34,7 @@ import { SourceEditing } from '@ckeditor/ckeditor5-source-editing'
 import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters'
 import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials'
 import Table from '@ckeditor/ckeditor5-table/src/table.js'
-import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties'
+import TableCellProperties from './Tablecellproperties/tableCellProperties'
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js'
 import CustomTableToolbar from './Table/CustomTableToolbar.js'
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js'
@@ -189,7 +189,10 @@ const extraConfig = {
         { label: 'Sienna', color: '#7D2F19' },
         { label: 'Pale Brown', color: '#764A33' },
         { label: 'Maize', color: '#F3C9A3' }
-      ]
+      ],
+      disableBorder: true,
+      disableBackground: true,
+      disableDimensions: true
     }
   }
 }
