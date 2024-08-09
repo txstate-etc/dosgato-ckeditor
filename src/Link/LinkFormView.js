@@ -10,7 +10,7 @@ const items = [
 ]
 
 export default class LinkFormView extends LFV {
-  constructor( locale, linkCommand ) {
+  constructor( locale, linkCommand, options ) {
     super(locale, linkCommand)
 
     this.set({
@@ -21,23 +21,31 @@ export default class LinkFormView extends LFV {
 
     this.linkTypeDropdown = createDropdown(this, { key: 'linkType', label: 'Link Type', items })
 
-    this.linkTypeDropdown.bind('isEnabled').to(linkCommand, 'isEnabled')
+    this.options = options
+    
+    if (!options.disableDropdown) {
+      this.children.add(this.linkTypeDropdown, 0)
+      this.linkTypeDropdown.bind('isEnabled').to(linkCommand, 'isEnabled')
+    }
 
-    this.children.add(this.linkTypeDropdown, 0)
-    this.children.add(this.browseLinkButton, 2)
+    if (!options.disableBrowse) this.children.add(this.browseLinkButton, 2)
   }
 
   render () {
     super.render()
 
     const children = [this.linkTypeDropdown, this.browseLinkButton]
-    this._focusables.add(children[0], 0)
-    this._focusables.add(children[1], 2)
 
-    children.forEach(c => {
-      // Register the view in the focus tracker.
-      this.focusTracker.add( c.element )
-    })
+    if (!this.options.disableDropdown) {
+      this._focusables.add(children[0], 0)
+      this.focusTracker.add( children[0].element )
+    }
+    
+    if (!this.options.disableBrowse) {
+      this._focusables.add(children[1], 2)
+      this.focusTracker.add( children[1].element )
+    }
+    
   }
 
   createBrowseButton (linkCommand) {

@@ -38,9 +38,10 @@ export class LinkUI extends LUI {
 		const editor = this.editor
 		const linkCommand = editor.commands.get( 'link' )
 		const defaultProtocol = editor.config.get( 'link.defaultProtocol' )
+		const linkOptions = editor.config.get( 'link.options' ) || {}
 		const config = editor.config.get('assetBrowser')
 
-		const formView = new LinkFormView( editor.locale, linkCommand )
+		const formView = new LinkFormView( editor.locale, linkCommand, linkOptions )
 
 		formView.urlInputView.fieldView.bind( 'value' ).to( linkCommand, 'value' )
 
