@@ -8,7 +8,8 @@ import {
   FocusCycler,
   injectCssTransitionDisabler
 } from '@ckeditor/ckeditor5-ui'
-import { icons } from '@ckeditor/ckeditor5-core'
+import checkIcon from '@ckeditor/ckeditor5-core/theme/icons/check.svg'
+import cancelIcon from '@ckeditor/ckeditor5-core/theme/icons/cancel.svg'
 import { FocusTracker, KeystrokeHandler } from '@ckeditor/ckeditor5-utils'
 
 export default class AnchorView extends View {
@@ -23,7 +24,7 @@ export default class AnchorView extends View {
 
     this.saveButtonView = this._createButton(
       'Save',
-      icons.check,
+      checkIcon,
       'ck-button-save'
     )
     // Submit type of the button will trigger the submit event on entire form when clicked
@@ -32,7 +33,7 @@ export default class AnchorView extends View {
 
     this.cancelButtonView = this._createButton(
       'Cancel',
-      icons.cancel,
+      cancelIcon,
       'ck-button-cancel'
     )
 
@@ -130,11 +131,11 @@ export default class AnchorView extends View {
 
   _createformChildren () {
     const children = this.createCollection()
-    
+
     children.add(this.anchorInputView)
     children.add(this.saveButtonView)
     children.add(this.cancelButtonView)
-    
+
     return children
   }
 }

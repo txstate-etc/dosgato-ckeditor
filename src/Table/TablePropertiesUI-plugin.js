@@ -48,7 +48,7 @@ class TablePropertiesUI extends Plugin {
     editor.commands.add('tableBorder', new TableClassCommand(editor, 'border'))
     editor.commands.add('tableAltBGColor', new TableClassCommand(editor, 'alternate-row-color'))
     const conversions = ['style', 'class', 'border']
-    
+
     conversions.forEach(c => {
       editor.conversion.attributeToAttribute({
         model: {
@@ -65,7 +65,7 @@ class TablePropertiesUI extends Plugin {
     editor.conversion.for( 'upcast' ).add(dispatcher => {
       dispatcher.on('element:figure', tableUpcast(dataFilter))
     })
-    
+
     editor.conversion.for( 'upcast' ).add(dispatcher => {
       dispatcher.on('element:table', tableUpcast(dataFilter))
     })

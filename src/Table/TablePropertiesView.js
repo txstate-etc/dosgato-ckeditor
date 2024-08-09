@@ -1,4 +1,5 @@
-import { icons } from '@ckeditor/ckeditor5-core'
+import checkIcon from '@ckeditor/ckeditor5-core/theme/icons/check.svg'
+import cancelIcon from '@ckeditor/ckeditor5-core/theme/icons/cancel.svg'
 import { View, ButtonView, ViewCollection, FocusCycler, FormHeaderView, submitHandler } from '@ckeditor/ckeditor5-ui'
 import FormRowView from '@ckeditor/ckeditor5-table/src/ui/formrowview'
 import { FocusTracker, KeystrokeHandler } from '@ckeditor/ckeditor5-utils'
@@ -21,7 +22,7 @@ export default class TablePropertiesView extends View {
     const { saveButtonView, cancelButtonView} = this._createActionButtons()
 
     this.saveButtonView = saveButtonView
-    
+
     this.cancelButtonView = cancelButtonView
 
     const { headersDropdownView, tableHeaderColorsDropdownView } = this._createHeaderButtons()
@@ -39,11 +40,11 @@ export default class TablePropertiesView extends View {
     const tableWidthsDropdown = createDropdown(this, { key: 'tableWidth', label: 'Table Width', items: this.options.tableWidth })
 
     this.tableWidthsDropdown = tableWidthsDropdown
-    
+
     this.focusTracker = new FocusTracker()
-    
+
     this.keystrokes = new KeystrokeHandler()
-    
+
     this.children = this.createCollection()
 
     this._focusables = new ViewCollection()
@@ -176,7 +177,7 @@ export default class TablePropertiesView extends View {
 
     saveButtonView.set({
       label: t('Save'),
-      icon: icons.check,
+      icon: checkIcon,
       class: 'ck-button-save',
       type: 'submit',
       withText: true
@@ -184,7 +185,7 @@ export default class TablePropertiesView extends View {
 
     cancelButtonView.set({
       label: t('Cancel'),
-      icon: icons.cancel,
+      icon: cancelIcon,
       class: 'ck-button-cancel',
       withText: true
     })
@@ -237,4 +238,3 @@ export default class TablePropertiesView extends View {
     }
   }
 }
-

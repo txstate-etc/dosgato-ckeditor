@@ -1,5 +1,5 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin'
-import { createDropdown, SwitchButtonView, addListToDropdown, Model } from 'ckeditor5/src/ui'
+import { createDropdown, SwitchButtonView, addListToDropdown, ViewModel } from 'ckeditor5/src/ui'
 import { Collection } from 'ckeditor5/src/utils'
 import tableColumnIcon from '../icons/table-column.svg'
 import tableRowIcon from '../icons/table-row.svg'
@@ -131,7 +131,7 @@ export default class CustomTableToolbar extends Plugin {
 
 
 function addListOption( option, editor, commands, itemDefinitions ) {
-  const model = option.model = new Model( option.model );
+  const model = option.model = new ViewModel( option.model );
   const { commandName, bindIsOn } = option.model;
 
   if ( option.type === 'button' || option.type === 'switchbutton' ) {

@@ -10,8 +10,9 @@ const items = [
 ]
 
 export default class LinkFormView extends LFV {
-  constructor( locale, linkCommand ) {
+  constructor( locale, linkCommand, hasAssetBrowser ) {
     super(locale, linkCommand)
+    this.hasAssetBrowser = hasAssetBrowser
 
     this.set({
       linkType: 'url'
@@ -24,15 +25,18 @@ export default class LinkFormView extends LFV {
     this.linkTypeDropdown.bind('isEnabled').to(linkCommand, 'isEnabled')
 
     this.children.add(this.linkTypeDropdown, 0)
-    this.children.add(this.browseLinkButton, 2)
+    if (this.hasAssetBrowser) this.children.add(this.browseLinkButton, 2)
   }
 
   render () {
     super.render()
 
-    const children = [this.linkTypeDropdown, this.browseLinkButton]
+    const children = [this.linkTypeDropdown]
     this._focusables.add(children[0], 0)
-    this._focusables.add(children[1], 2)
+    if (this.hasAssetBrowser) {
+      children.push(this.browseLinkButton)
+      this._focusables.add(this.browseLinkButton, 2)
+    }
 
     children.forEach(c => {
       // Register the view in the focus tracker.

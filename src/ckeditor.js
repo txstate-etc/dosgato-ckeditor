@@ -41,7 +41,6 @@ import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformatio
 import Undo from '@ckeditor/ckeditor5-undo/src/undo'
 import TableProperties from './Table/TablePropertiesUI-plugin.js'
 import AssetBrowser from './AssetBrowser.js'
-import ImageTextAlternative from './Image/ImageTextAlternative.js'
 import Anchor from './Anchor/AnchorUI.js'
 import Link, { LinkImage } from './Link/LinkUI.js'
 import { htmlSupport } from './utils/defaultConfigs.js'
@@ -68,7 +67,6 @@ Editor.builtinPlugins = [
   ImageCaption,
   ImageResize,
   ImageStyle,
-  ImageTextAlternative,
   ImageToolbar,
   Indent,
   IndentBlock,
@@ -141,13 +139,17 @@ const extraConfig = {
       'imageStyle:breakText',
       '|',
       'toggleImageCaption',
-      'imageTxtAlternative',
+      'imageTextAlternative',
       '|',
       'browseLinkImage'
     ]
   },
   fontColor: {
+    colorPicker: false,
     colors: ['#222222', '#465147', '#654D3C', '#7D2F19', '#764A33', '#b30e1b']
+  },
+  fontBackgroundColor: {
+    colorPicker: false
   },
   list: {
     properties: {
@@ -158,6 +160,7 @@ const extraConfig = {
   table: {
     contentToolbar: ['tableProperties', 'customTableColumn', 'customTableRow', 'mergeTableCells', 'tableCellProperties'],
     tableProperties: {
+      colorPicker: false,
       tableWidth: [
         { label: '100%', value: 'full-width' },
         { label: 'Auto', value: 'auto-width' }
@@ -181,6 +184,7 @@ const extraConfig = {
       templateColorLabel: 'Wittliff Colors',
     },
     tableCellProperties: {
+      colorPicker: false,
       backgroundColors: [
         { label: 'Cactus', color: '#465147' },
         { label: 'Coffee', color: '#654D3C' },
@@ -210,9 +214,11 @@ const defaultConfig = {
   htmlSupport: {
     allow: htmlSupport
   },
-  language: 'en'
+  language: 'en',
+  ui: {
+    poweredBy: { label: '' }
+  }
 }
-
 
 Editor.defaultConfig = { ...defaultConfig, ...extraConfig }
 

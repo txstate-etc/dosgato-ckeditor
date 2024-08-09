@@ -1,4 +1,4 @@
-import { LabeledFieldView, Model, addListToDropdown, createLabeledDropdown } from '@ckeditor/ckeditor5-ui'
+import { LabeledFieldView, ViewModel, addListToDropdown, createLabeledDropdown } from '@ckeditor/ckeditor5-ui'
 import { Collection } from '@ckeditor/ckeditor5-utils'
 
 /**
@@ -41,7 +41,7 @@ export function getLabels (t, c) {
 export function createDropdown (view, { key, label, items }) {
   const locale = view.locale
   const t = view.t
-  
+
   const headerView = new LabeledFieldView(locale, createLabeledDropdown)
 
   const labels = getLabels(t, items)
@@ -63,7 +63,7 @@ export function createDropdown (view, { key, label, items }) {
   headerView.fieldView.on('execute', evt => {
     view[key] = evt.source.commandParam
   })
-  
+
   headerView.bind('isEmpty').to(view, key, value => !value)
 
   addListToDropdown(
@@ -82,7 +82,7 @@ export function getDropdownItemsDefinitions (t, items) {
   for (const item in labels) {
     const definition = {
       type: 'button',
-      model: new Model({
+      model: new ViewModel({
         commandParam: item,
         label: labels[item],
         withText: true

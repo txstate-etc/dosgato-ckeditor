@@ -1,4 +1,5 @@
-import { icons } from '@ckeditor/ckeditor5-core'
+import checkIcon from '@ckeditor/ckeditor5-core/theme/icons/check.svg'
+import cancelIcon from '@ckeditor/ckeditor5-core/theme/icons/cancel.svg'
 import { View, ButtonView, ViewCollection, FocusCycler, FormHeaderView, submitHandler, addListToDropdown } from '@ckeditor/ckeditor5-ui'
 import FormRowView from '@ckeditor/ckeditor5-table/src/ui/formrowview'
 import { FocusTracker, KeystrokeHandler } from '@ckeditor/ckeditor5-utils'
@@ -18,17 +19,17 @@ export default class AnchorFormView extends View {
     const { saveButtonView, cancelButtonView} = this._createActionButtons()
 
     this.saveButtonView = saveButtonView
-    
+
     this.cancelButtonView = cancelButtonView
 
     const anchorsDropdown = createDropdown(this, { key: 'anchor', label: 'Anchors', items: this.options })
 
     this.anchorsDropdown = anchorsDropdown
-    
+
     this.focusTracker = new FocusTracker()
-    
+
     this.keystrokes = new KeystrokeHandler()
-    
+
     this.children = this.createCollection()
 
     this._focusables = new ViewCollection()
@@ -119,7 +120,7 @@ export default class AnchorFormView extends View {
 
     saveButtonView.set({
       label: t('Save'),
-      icon: icons.check,
+      icon: checkIcon,
       class: 'ck-button-save',
       type: 'submit',
       withText: true
@@ -127,7 +128,7 @@ export default class AnchorFormView extends View {
 
     cancelButtonView.set({
       label: t('Cancel'),
-      icon: icons.cancel,
+      icon: cancelIcon,
       class: 'ck-button-cancel',
       withText: true
     })
@@ -139,4 +140,3 @@ export default class AnchorFormView extends View {
     }
   }
 }
-
