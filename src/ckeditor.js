@@ -189,10 +189,7 @@ const extraConfig = {
         { label: 'Sienna', color: '#7D2F19' },
         { label: 'Pale Brown', color: '#764A33' },
         { label: 'Maize', color: '#F3C9A3' }
-      ],
-      disableBorder: true,
-      disableBackground: true,
-      disableDimensions: true
+      ]
     }
   }
 }
