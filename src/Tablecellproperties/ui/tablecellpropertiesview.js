@@ -55,6 +55,10 @@ export default class TableCellPropertiesView extends View {
 	 * {@link module:table/tablecellproperties/ui/tablecellpropertiesview~TableCellPropertiesView#backgroundInput}.
 	 * @param {module:table/tablecellproperties~TableCellPropertiesOptions} options.defaultTableCellProperties The default
 	 * table cell properties.
+	 * @param {module:table/table~TableConfig} options.disableBorder
+	 * @param {module:table/table~TableConfig} options.disableBackground
+	 * @param {module:table/table~TableConfig} options.disableDimensions
+	 * @param {module:table/table~TableConfig} options.disableAlignment
 	 */
 	constructor( locale, options ) {
 		super( locale );
@@ -357,14 +361,12 @@ export default class TableCellPropertiesView extends View {
 		}
 
 		if (!options.disableAlignment) {
+			const children = [alignmentLabel, horizontalAlignmentToolbar]
+			if (!options.disableDimensions) children.push(verticalAlignmentToolbar)
 			// Text alignment row.
 			this.children.add( new FormRowView( locale, {
 				labelView: alignmentLabel,
-				children: [
-					alignmentLabel,
-					horizontalAlignmentToolbar,
-					verticalAlignmentToolbar
-				],
+				children,
 				class: 'ck-table-cell-properties-form__alignment-row'
 			} ) );
 		}
